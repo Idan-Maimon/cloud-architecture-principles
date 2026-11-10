@@ -1,6 +1,7 @@
-# Flexibility (Replaceability)
+# QG5 — Flexibility (Replaceability)
 
-**Q42 / ISO 25010:2023:** Flexibility → Replaceability, Adaptability (`#flexible`)
+**ISO/IEC 25010:2023:** Flexibility → Replaceability, Adaptability, Installability (`#flexible`)
+**Cloud frameworks:** Google Cloud — Design for change, Decouple your architecture
 
 ## Statement
 
@@ -16,10 +17,12 @@ Every service and infrastructure component depends only on the *capability* it c
 
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
-| FX-1 | Replace an implementation | A capability provider is replaced (e.g. one hypervisor with another, a VM with bare metal or a cloud instance, one storage vendor with another) | Consuming services keep working unchanged | 0 code changes in consumers; changes limited to the provider adapter and its configuration |
-| FX-2 | Add a provider | A new implementation of an existing capability is introduced | It becomes available through the existing contract | Onboarding touches only the new adapter; no changes to the platform core or to consumers |
-| FX-3 | Run providers side by side | Two implementations of the same capability serve production together | Consumers can't tell them apart, except for advertised characteristics (performance class, location, cost) | The same conformance suite passes on every provider |
-| FX-4 | Exit a provider | A strategic decision is made to leave a vendor or cloud | Workloads are moved within a planned window | Exit plan documented per provider; exit effort estimated and bounded |
+| QG5.1 | Replace an implementation | A capability provider is replaced (e.g. one hypervisor with another, a VM with bare metal or a cloud instance, one storage vendor with another) | Consuming services keep working unchanged | 0 code changes in consumers; changes limited to the provider adapter and its configuration |
+| QG5.2 | Add a provider | A new implementation of an existing capability is introduced | It becomes available through the existing contract | Onboarding touches only the new adapter; no changes to the platform core or to consumers |
+| QG5.3 | Run providers side by side | Two implementations of the same capability serve production together | Consumers can't tell them apart, except for advertised characteristics (performance class, location, cost) | The same conformance suite passes on every provider |
+| QG5.4 | Exit a provider | A strategic decision is made to leave a vendor or cloud | Workloads are moved within a planned window | Exit plan documented per provider; exit effort estimated and bounded |
+| QG5.5 | Install in a new location | A service is needed in a new site or environment | It is deployed from code alone | 0 manual steps; deployed from the same repository and pipeline |
+| QG5.6 | Adapt to an environment | A service runs in dev, staging, prod and every site | It behaves the same in each, differing only by configuration | 0 forks per environment |
 
 ## Design Principles
 
@@ -39,6 +42,7 @@ Every service and infrastructure component depends only on the *capability* it c
 - Is there a contract and a conformance suite for each capability the service consumes?
 - Could a second provider be added without touching consumers?
 - Is every proprietary dependency recorded as an ADR with an exit cost?
+- Can the service be installed in a new site from code alone?
 
 ## Example
 
