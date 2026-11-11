@@ -34,3 +34,30 @@ Principles, quality goals and design guidance for how services and infrastructur
 ## Principles
 
 - [Cross-cutting principles](docs/principles/cross-cutting.md)
+
+## Sources
+
+### Quality frameworks
+
+- [ISO/IEC 25010:2023 — Product quality model](https://www.iso.org/obp/ui/#iso:std:iso-iec:25010:ed-2:v1:en)
+- [ISO/IEC 25010 explained (Sonar)](https://www.sonarsource.com/resources/library/iso-iec-25010-explained/)
+- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/) — [Cost optimization design principles](https://docs.aws.amazon.com/wellarchitected/latest/framework/cost-dp.html)
+- [Google Cloud Architecture Framework](https://docs.cloud.google.com/architecture/framework)
+- [Q42 — arc42 quality model](https://quality.arc42.org)
+
+### From definition to practice
+
+- [SEI — ATAM: Method for Architecture Evaluation (Kazman, Klein, Clements)](https://www.sei.cmu.edu/documents/629/2000_005_001_13706.pdf)
+- [Architecture Tradeoff Analysis: Picking Your Poison (Carefully)](https://www.architectviewmaster.com/blog/architecture-tradeoff-analysis-picking-your-poison-carefully/)
+- [DataKnobs — ATAM Guide](https://www.dataknobs.com/blog/architecture/atam/)
+- [Thoughtworks — Fitness function-driven development](https://www.thoughtworks.com/insights/articles/fitness-function-driven-development)
+- [Architecture Fitness Functions (Software Architecture wiki)](https://synchronium.github.io/software-architecture-wiki/concepts/fitness-functions.html)
+- [NILUS — Fitness Functions in Evolutionary Architecture](https://www.nilus.be/blog/architecture_fitness_functions_in_evolutionary_architecture/)
+- [AWS — Using Cloud Fitness Functions to Drive Evolutionary Architecture](https://aws.amazon.com/blogs/architecture/using-cloud-fitness-functions-to-drive-evolutionary-architecture/)
+- [Architects, Don't Skip Leg Day: Fitness Functions Matter](https://medium.com/@oscarvanderleij/architects-dont-skip-leg-day-fitness-functions-matter-ef16ab9ed012)
+- [AWS re:Invent ARC204 — Scaling Well-Architected Reviews through the enterprise](https://d1.awsstatic.com/events/Summits/reinvent2022/ARC204_Scaling-AWS-Well-Architected-Reviews-through-the-enterprise.pdf)
+- [Well-Architected Review Buyer Guide 2026](https://www.factualminds.com/blog/aws-well-architected-review-buyer-guide-2026/)
+- [The Serverless Edge — Making well-architected reviews work for organisations](https://theserverlessedge.com/how-to-make-well-architected-work-for-organisations-introducing-the-scorp-review-cycle-part-1/)
+- [Spotify for Backstage — Soundcheck and a healthier tech culture](https://backstage.spotify.com/discover/blog/soundcheck-healthier-tech-culture)
+- [Platform Engineering Golden Paths: Internal Developer Portals in 2026](https://www.ainformat.com/detail/2698)
+- [Backstage vs Port vs Cortex](https://wetheflywheel.com/en/comparisons/backstage-vs-port-vs-cortex/)
