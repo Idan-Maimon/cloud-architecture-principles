@@ -34,6 +34,7 @@ Principles, quality goals and design guidance for how services and infrastructur
 ## Principles
 
 - [Cross-cutting principles](docs/principles/cross-cutting.md)
+- [Requirements and qualities](docs/principles/requirements-and-qualities.md) — how qualities are measured on requirements, and the SLA framework's role
 
 ## Sources
 
