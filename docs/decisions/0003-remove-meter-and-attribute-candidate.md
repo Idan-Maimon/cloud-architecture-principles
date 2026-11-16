@@ -1,4 +1,4 @@
-# ADR-0002 — Remove the Meter & Attribute candidate requirement
+# ADR-0003 — Remove the Meter & Attribute candidate requirement
 
 **Status:** Accepted
 **Date:** 2026-11-16
@@ -9,7 +9,7 @@ R5 Meter & Attribute (*usage and cost of every instance is recorded and attribut
 was listed as a candidate requirement, with a note that it may instead be treated as part of
 [QG9 Cost Efficiency](../quality-goals/qg09-cost-efficiency.md).
 
-Adding R5 Use ([ADR-0001](0001-add-use-as-a-requirement.md)) needed a decision on whether to keep
+Adding R5 Use ([ADR-0001](0001-requirements.md)) needed a decision on whether to keep
 the candidate as R6.
 
 ## Decision
