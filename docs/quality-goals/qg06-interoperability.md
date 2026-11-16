@@ -18,10 +18,14 @@ Every service works with others through standard, versioned contracts, and share
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
 | QG6.1 | Standard interface | A consumer integrates with a service | It uses a documented, versioned API based on open standards | 100% of services expose a versioned API (OpenAPI, gRPC, OIDC, S3, CSI…) |
-| QG6.2 | Co-existence | Several services share a cluster, network or storage system | None degrades another | Quotas and limits enforced; 0 cross-service incidents from resource contention |
+| QG6.2 | Co-existence *(candidate for removal)* | Several services share a cluster, network or storage system | None degrades another | Quotas and limits enforced; 0 cross-service incidents from resource contention |
 | QG6.3 | Backward compatibility | A service changes its API | Existing consumers keep working | Breaking changes only in a new version; deprecation period ≥ N months |
-| QG6.4 | Event integration | A service needs to notify others of a change | It publishes a documented event to the platform event bus | Event schemas versioned and published |
-| QG6.5 | Data exchange | Data moves between services | It uses agreed formats and schemas | 0 bespoke point-to-point formats |
+| QG6.4 | Event integration *(candidate for removal)* | A service needs to notify others of a change | It publishes a documented event to the platform event bus | Event schemas versioned and published |
+| QG6.5 | Data exchange *(candidate for removal)* | Data moves between services | It uses agreed formats and schemas | 0 bespoke point-to-point formats |
+
+QG6.2 and QG6.5 are candidates for removal: not needed.
+
+QG6.4 is a candidate for removal: too heavy to implement.
 
 ## Design Principles
 

@@ -3,6 +3,8 @@
 **ISO/IEC 25010:2023:** Safety → Operational constraint, Risk identification, Fail-safe behaviour, Hazard warning, Safe integration (`#safe`) — new in the 2023 edition
 **Cloud frameworks:** AWS and Google Cloud — Reliability (blast radius, guardrails)
 
+> **Candidate for removal:** the entire QG8 Safety goal. Reason: similar to [QG2 Reliability](qg02-reliability.md).
+
 ## Statement
 
 Every service fails safe, contains the impact of failures and bad changes, and prevents dangerous operations before they happen. Doing the wrong thing is hard; undoing it is possible.

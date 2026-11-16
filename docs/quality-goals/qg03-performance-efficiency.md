@@ -20,9 +20,13 @@ Every service delivers predictable, measured performance and is sized to demand.
 | QG3.1 | Data-plane latency | Requests under normal load | Responses within published targets | p95 ≤ N ms; p99 ≤ N ms |
 | QG3.2 | Lifecycle latency | A consumer runs R1–R4 (provision, modify, upgrade, decommission) | The operation completes in a deterministic time | p95 ≤ N minutes per operation |
 | QG3.3 | Capacity | Usage approaches the service's declared limit | Owners are alerted before saturation | Alert at ≥ N% of limit; limits published |
-| QG3.4 | Scale out | Demand increases | The service adds capacity without downtime | Scale-out ≤ N minutes; 0 downtime |
+| QG3.4 | Scale out *(candidate for removal)* | Demand increases | The service adds capacity without downtime | Scale-out ≤ N minutes; 0 downtime |
 | QG3.5 | Noisy neighbour | One tenant generates heavy load | Other tenants' performance stays within target | Other tenants' p99 unaffected beyond N% |
-| QG3.6 | Performance regression | A new version is released | Performance is compared with the previous version | Release blocked on regression > N% |
+| QG3.6 | Performance regression *(candidate for removal)* | A new version is released | Performance is compared with the previous version | Release blocked on regression > N% |
+
+QG3.4 is a candidate for removal: it is already handled under [QG2.6 Overload](qg02-reliability.md).
+
+QG3.6 is a candidate for removal: we cannot assure that every service is capable of implementing it.
 
 ## Design Principles
 
