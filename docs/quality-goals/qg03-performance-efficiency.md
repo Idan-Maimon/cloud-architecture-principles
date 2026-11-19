@@ -11,7 +11,7 @@ Every service delivers predictable, measured performance and is sized to demand.
 
 - Consumers can only design their systems if our latency and throughput are predictable.
 - Unknown capacity limits turn growth into outages.
-- Over-provisioning to hide unpredictability wastes money and energy (see QG9, QG10).
+- Over-provisioning to hide unpredictability wastes money and energy (see QG7, QG8).
 
 ## Quality Scenarios
 

@@ -25,9 +25,9 @@ Principles, quality goals and design guidance for how services and infrastructur
 | QG3 | [Performance Efficiency](docs/quality-goals/qg03-performance-efficiency.md) |
 | QG4 | [Operability](docs/quality-goals/qg04-operability.md) |
 | QG5 | [Flexibility](docs/quality-goals/qg05-flexibility.md) |
-| QG7 | [Consumability](docs/quality-goals/qg07-consumability.md) |
-| QG9 | [Cost Efficiency](docs/quality-goals/qg09-cost-efficiency.md) |
-| QG10 | *(candidate for removal)* [Sustainability](docs/quality-goals/qg10-sustainability.md) |
+| QG6 | [Consumability](docs/quality-goals/qg06-consumability.md) |
+| QG7 | [Cost Efficiency](docs/quality-goals/qg07-cost-efficiency.md) |
+| QG8 | *(candidate for removal)* [Sustainability](docs/quality-goals/qg08-sustainability.md) |
 
 ## Principles
 

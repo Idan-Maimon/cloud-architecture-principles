@@ -1,4 +1,4 @@
-# QG9 — Cost Efficiency
+# QG7 — Cost Efficiency
 
 **ISO/IEC 25010:2023:** Performance efficiency → Resource utilization (`#efficient`)
 **Cloud frameworks:** AWS — Cost optimization; Google Cloud — Cost optimization
@@ -17,9 +17,9 @@ Every unit of capacity is attributed to an owner, justified by business value an
 
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
-| QG9.1 | Attribution | A resource is created | It carries owner, cost centre and environment tags | 100% tagged; untagged resources rejected |
-| QG9.2 | Opportunism | A resource is allocated but not claimed by its owner | Other consumers can claim it, knowing the owner may take it back at any moment | ≥ N% of unclaimed capacity available for opportunistic use |
-| QG9.3 | Cost visibility | A month closes | Each department sees its usage, its cost per unit of business output, and right-sizing recommendations | Report per service and per department every month; recommendations issued for resources below N% utilisation |
+| QG7.1 | Attribution | A resource is created | It carries owner, cost centre and environment tags | 100% tagged; untagged resources rejected |
+| QG7.2 | Opportunism | A resource is allocated but not claimed by its owner | Other consumers can claim it, knowing the owner may take it back at any moment | ≥ N% of unclaimed capacity available for opportunistic use |
+| QG7.3 | Cost visibility | A month closes | Each department sees its usage, its cost per unit of business output, and right-sizing recommendations | Report per service and per department every month; recommendations issued for resources below N% utilisation |
 
 ## Design Principles
 

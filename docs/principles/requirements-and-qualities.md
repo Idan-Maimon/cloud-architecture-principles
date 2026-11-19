@@ -25,7 +25,7 @@ If the upgrade takes 3 hours, it misses the measure. In the [SLA framework](http
 | Kind | Qualities | Measured per operation? | How it is checked |
 |---|---|---|---|
 | **Runtime qualities** | QG2 Reliability, QG3 Performance Efficiency | Yes: each operation has a success rate and a duration | **SLOs and error budgets**, per operation, using the [SLA framework](https://github.com/Idan-Maimon/sla-framework) |
-| **Built-in qualities** | QG1 Security, QG4 Operability, QG5 Flexibility, QG7 Consumability, QG9 Cost Efficiency, QG10 Sustainability | No: they are properties of how the service is built and run | **Fitness functions** (automated checks in pipelines and policy), **scorecards** and **architecture reviews** |
+| **Built-in qualities** | QG1 Security, QG4 Operability, QG5 Flexibility, QG6 Consumability, QG7 Cost Efficiency, QG8 Sustainability | No: they are properties of how the service is built and run | **Fitness functions** (automated checks in pipelines and policy), **scorecards** and **architecture reviews** |
 
 Runtime qualities are what the business sees. Built-in qualities are what make the runtime results achievable and sustainable.
 
@@ -33,7 +33,7 @@ Runtime qualities are what the business sees. Built-in qualities are what make t
 
 Every service fills this matrix. Each cell says how that quality is checked for that operation.
 
-| | QG2 Reliability | QG3 Performance | Built-in qualities (QG1, QG4, QG5, QG7, QG9, QG10) |
+| | QG2 Reliability | QG3 Performance | Built-in qualities (QG1, QG4–QG8) |
 |---|---|---|---|
 | **R1 Provision** | SLO: % of provisions that succeed | SLO: time to ready (e.g. p95) | Fitness functions, scorecard, review |
 | **R2 Modify** | SLO: % of modifications that succeed | SLO: time to apply | Fitness functions, scorecard, review |

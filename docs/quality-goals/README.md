@@ -13,9 +13,9 @@ Measures marked `N` are placeholders to be calibrated. Departments may set stric
 | [QG3 Performance Efficiency](qg03-performance-efficiency.md) | Performance efficiency | Performance efficiency | Performance optimization |
 | [QG4 Operability](qg04-operability.md) | Maintainability, Interaction capability | Operational excellence | Operational excellence |
 | [QG5 Flexibility](qg05-flexibility.md) | Flexibility | — | Design for change, Decouple |
-| [QG7 Consumability](qg07-consumability.md) | Interaction capability, Functional suitability, Compatibility | — | Document your architecture |
-| [QG9 Cost Efficiency](qg09-cost-efficiency.md) | Performance efficiency (resource utilization) | Cost optimization | Cost optimization |
-| [QG10 Sustainability](qg10-sustainability.md) *(candidate for removal)* | — | Sustainability | Sustainability |
+| [QG6 Consumability](qg06-consumability.md) | Interaction capability, Functional suitability, Compatibility | — | Document your architecture |
+| [QG7 Cost Efficiency](qg07-cost-efficiency.md) | Performance efficiency (resource utilization) | Cost optimization | Cost optimization |
+| [QG8 Sustainability](qg08-sustainability.md) *(candidate for removal)* | — | Sustainability | Sustainability |
 
 All nine ISO/IEC 25010:2023 characteristics and all six pillars of each cloud framework are covered.
 

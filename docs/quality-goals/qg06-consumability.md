@@ -1,4 +1,4 @@
-# QG7 — Consumability
+# QG6 — Consumability
 
 **ISO/IEC 25010:2023:** Interaction capability → Appropriateness recognizability, Learnability, Self-descriptiveness, User error protection; Functional suitability → Completeness, Correctness, Appropriateness; Compatibility → Interoperability (`#usable`, `#suitable`, `#compatible`)
 **Cloud frameworks:** Google Cloud — Document your architecture
@@ -17,12 +17,12 @@ A consumer can find, understand and use any service without help from the team t
 
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
-| QG7.1 | Self-service | A consumer needs to provision, modify, upgrade or decommission an instance (R1–R4) | They do it through API, CLI or portal | 0 tickets for routine operations |
-| QG7.2 | Discoverability | A consumer looks for a capability | They find the service in the central catalogue, with its documentation, API reference, examples and SLO | 100% of services listed with documentation, API reference, examples and SLO |
-| QG7.3 | Functional correctness | A service is released | It passes its published conformance suite | 100% pass rate before release |
-| QG7.4 | Time to first use | A new consumer starts using a service | They succeed using the documentation alone | ≤ N minutes to first successful instance |
-| QG7.5 | Error protection | A consumer submits an invalid or risky request | It is rejected with a clear, actionable message | 100% of validation errors explain how to fix them |
-| QG7.6 | Stable, standard interface | A consumer integrates with the service, or the service changes its API | The consumer uses a documented, versioned API based on open standards, and existing consumers keep working | 100% of services expose a versioned API (OpenAPI, AsyncAPI for events, gRPC, OIDC, S3, CSI…); breaking changes only in a new version, with a deprecation period ≥ N months |
+| QG6.1 | Self-service | A consumer needs to provision, modify, upgrade or decommission an instance (R1–R4) | They do it through API, CLI or portal | 0 tickets for routine operations |
+| QG6.2 | Discoverability | A consumer looks for a capability | They find the service in the central catalogue, with its documentation, API reference, examples and SLO | 100% of services listed with documentation, API reference, examples and SLO |
+| QG6.3 | Functional correctness | A service is released | It passes its published conformance suite | 100% pass rate before release |
+| QG6.4 | Time to first use | A new consumer starts using a service | They succeed using the documentation alone | ≤ N minutes to first successful instance |
+| QG6.5 | Error protection | A consumer submits an invalid or risky request | It is rejected with a clear, actionable message | 100% of validation errors explain how to fix them |
+| QG6.6 | Stable, standard interface | A consumer integrates with the service, or the service changes its API | The consumer uses a documented, versioned API based on open standards, and existing consumers keep working | 100% of services expose a versioned API (OpenAPI, AsyncAPI for events, gRPC, OIDC, S3, CSI…); breaking changes only in a new version, with a deprecation period ≥ N months |
 
 ## Design Principles
 

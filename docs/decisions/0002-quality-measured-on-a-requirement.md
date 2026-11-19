@@ -24,7 +24,7 @@ cost, how easy it is to change), and cannot be counted as good and bad events.
 | Kind | Qualities | How it is checked |
 |---|---|---|
 | **Runtime qualities** | QG2 Reliability, QG3 Performance Efficiency | **SLOs and error budgets**, per requirement, using the [SLA framework](https://github.com/Idan-Maimon/sla-framework) |
-| **Built-in qualities** | QG1, QG4–QG10 | **Fitness functions** (automated checks in pipelines and policy), **scorecards** and **architecture reviews** |
+| **Built-in qualities** | QG1, QG4–QG8 | **Fitness functions** (automated checks in pipelines and policy), **scorecards** and **architecture reviews** |
 
 3. Every service fills the requirements × qualities matrix in
    [Requirements and qualities](../principles/requirements-and-qualities.md). Each cell says how

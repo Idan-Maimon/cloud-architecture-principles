@@ -1,9 +1,9 @@
-# QG10 — Sustainability
+# QG8 — Sustainability
 
 **ISO/IEC 25010:2023:** not a product quality characteristic; related to Performance efficiency → Resource utilization
 **Cloud frameworks:** AWS — Sustainability; Google Cloud — Sustainability
 
-> **Candidate for removal:** the entire QG10 Sustainability goal. Reason: similar to [QG2 Reliability](qg02-reliability.md).
+> **Candidate for removal:** the entire QG8 Sustainability goal. Reason: similar to [QG2 Reliability](qg02-reliability.md).
 
 ## Statement
 
@@ -19,11 +19,11 @@ Our energy and hardware footprint goes down as utilisation goes up. Every servic
 
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
-| QG10.1 | Utilisation | The fleet operates normally | Utilisation targets are met and reported | Compute utilisation ≥ N%; reported monthly |
-| QG10.2 | Idle reclamation | A resource stays idle | It is detected and reclaimed automatically | Reclaimed after N days idle, with owner notice |
-| QG10.3 | Hardware lifecycle | A hardware generation reaches review | Refresh is decided on energy efficiency as well as cost | Performance-per-watt included in every refresh decision |
-| QG10.4 | Energy visibility | A service or department reviews its footprint | Energy use (or an agreed proxy) is visible | Reported per service and department |
-| QG10.5 | Data lifecycle | Data passes its retention period | It is moved to colder storage or deleted | 100% of data under a lifecycle policy |
+| QG8.1 | Utilisation | The fleet operates normally | Utilisation targets are met and reported | Compute utilisation ≥ N%; reported monthly |
+| QG8.2 | Idle reclamation | A resource stays idle | It is detected and reclaimed automatically | Reclaimed after N days idle, with owner notice |
+| QG8.3 | Hardware lifecycle | A hardware generation reaches review | Refresh is decided on energy efficiency as well as cost | Performance-per-watt included in every refresh decision |
+| QG8.4 | Energy visibility | A service or department reviews its footprint | Energy use (or an agreed proxy) is visible | Reported per service and department |
+| QG8.5 | Data lifecycle | Data passes its retention period | It is moved to colder storage or deleted | 100% of data under a lifecycle policy |
 
 ## Design Principles
 
