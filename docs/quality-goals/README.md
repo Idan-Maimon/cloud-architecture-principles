@@ -9,12 +9,11 @@ Measures marked `N` are placeholders to be calibrated. Departments may set stric
 | Goal | ISO/IEC 25010:2023 | AWS Well-Architected | Google Cloud Framework |
 |---|---|---|---|
 | [QG1 Security](qg01-security.md) | Security | Security | Security, privacy and compliance |
-| [QG2 Reliability](qg02-reliability.md) | Reliability | Reliability | Reliability |
+| [QG2 Reliability](qg02-reliability.md) | Reliability, Safety | Reliability | Reliability |
 | [QG3 Performance Efficiency](qg03-performance-efficiency.md) | Performance efficiency | Performance efficiency | Performance optimization |
 | [QG4 Operability](qg04-operability.md) | Maintainability, Interaction capability | Operational excellence | Operational excellence |
 | [QG5 Flexibility](qg05-flexibility.md) | Flexibility | — | Design for change, Decouple |
 | [QG7 Consumability](qg07-consumability.md) | Interaction capability, Functional suitability, Compatibility | — | Document your architecture |
-| [QG8 Safety](qg08-safety.md) *(candidate for removal)* | Safety | — | — |
 | [QG9 Cost Efficiency](qg09-cost-efficiency.md) | Performance efficiency (resource utilization) | Cost optimization | Cost optimization |
 | [QG10 Sustainability](qg10-sustainability.md) *(candidate for removal)* | — | Sustainability | Sustainability |
 

@@ -19,11 +19,7 @@ Every unit of capacity is attributed to an owner, justified by business value an
 |---|---|---|---|---|
 | QG9.1 | Attribution | A resource is created | It carries owner, cost centre and environment tags | 100% tagged; untagged resources rejected |
 | QG9.2 | Opportunism | A resource is allocated but not claimed by its owner | Other consumers can claim it, knowing the owner may take it back at any moment | ≥ N% of unclaimed capacity available for opportunistic use |
-| QG9.3 | Efficiency | A service reports its consumption | Utilisation and cost per unit of business output are visible | Reported monthly per service and per department |
-| QG9.4 | Right-sizing *(candidate for removal)* | A resource is over-provisioned | The owner receives a right-sizing recommendation | Recommendations issued for resources below N% utilisation |
-| QG9.5 | Showback *(candidate for removal)* | A month closes | Each department sees its usage and cost | Showback report per department every month |
-
-QG9.4 and QG9.5 are candidates for removal: not needed.
+| QG9.3 | Cost visibility | A month closes | Each department sees its usage, its cost per unit of business output, and right-sizing recommendations | Report per service and per department every month; recommendations issued for resources below N% utilisation |
 
 ## Design Principles
 
