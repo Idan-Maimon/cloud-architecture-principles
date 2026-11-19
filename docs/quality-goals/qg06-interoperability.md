@@ -3,6 +3,8 @@
 **ISO/IEC 25010:2023:** Compatibility → Interoperability, Co-existence (`#compatible`)
 **Cloud frameworks:** Google Cloud — Decouple your architecture
 
+> **Candidate for removal:** the entire QG6 Interoperability goal. QG6.1 and QG6.3 merge into QG7 Consumability, QG6.4 moves to the cross-cutting principles, and QG6.2 and QG6.5 are removed. The ISO/IEC 25010 Compatibility mapping would move to QG7.
+
 ## Statement
 
 Every service works with others through standard, versioned contracts, and shares infrastructure without degrading its neighbours. Integrating with a service never requires knowledge of its internals.
@@ -17,15 +19,13 @@ Every service works with others through standard, versioned contracts, and share
 
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
-| QG6.1 | Standard interface | A consumer integrates with a service | It uses a documented, versioned API based on open standards | 100% of services expose a versioned API (OpenAPI, gRPC, OIDC, S3, CSI…) |
-| QG6.2 | Co-existence *(candidate for removal)* | Several services share a cluster, network or storage system | None degrades another | Quotas and limits enforced; 0 cross-service incidents from resource contention |
-| QG6.3 | Backward compatibility | A service changes its API | Existing consumers keep working | Breaking changes only in a new version; deprecation period ≥ N months |
-| QG6.4 | Event integration *(candidate for removal)* | A service needs to notify others of a change | It publishes a documented event to the platform event bus | Event schemas versioned and published |
-| QG6.5 | Data exchange *(candidate for removal)* | Data moves between services | It uses agreed formats and schemas | 0 bespoke point-to-point formats |
+| QG6.1 | Standard interface *(candidate to merge into QG7.6)* | A consumer integrates with a service | It uses a documented, versioned API based on open standards | 100% of services expose a versioned API (OpenAPI, gRPC, OIDC, S3, CSI…) |
+| QG6.3 | Backward compatibility *(candidate to merge into QG7.6)* | A service changes its API | Existing consumers keep working | Breaking changes only in a new version; deprecation period ≥ N months |
+| QG6.4 | Event integration *(candidate to move to cross-cutting principles)* | A service needs to notify others of a change | It publishes a documented event to the platform event bus | Event schemas versioned and published |
 
-QG6.2 and QG6.5 are candidates for removal: not needed.
+QG6.4 is a candidate to move to the [cross-cutting principles](../principles/cross-cutting.md) (principle 7, draft for review): too heavy to implement as a scenario for every service.
 
-QG6.4 is a candidate for removal: too heavy to implement.
+QG6.1 and QG6.3 are candidates to merge into [QG7.6 Stable, standard interface](qg07-consumability.md).
 
 ## Design Principles
 

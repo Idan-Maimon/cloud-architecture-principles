@@ -22,9 +22,8 @@ Every unit of capacity is attributed to an owner, justified by business value an
 | QG9.3 | Efficiency | A service reports its consumption | Utilisation and cost per unit of business output are visible | Reported monthly per service and per department |
 | QG9.4 | Right-sizing *(candidate for removal)* | A resource is over-provisioned | The owner receives a right-sizing recommendation | Recommendations issued for resources below N% utilisation |
 | QG9.5 | Showback *(candidate for removal)* | A month closes | Each department sees its usage and cost | Showback report per department every month |
-| QG9.6 | Build vs reuse *(candidate for removal)* | A team plans to build its own infrastructure capability | It uses the platform service unless an ADR justifies otherwise | 0 unjustified duplicate capabilities |
 
-QG9.4, QG9.5 and QG9.6 are candidates for removal: not needed.
+QG9.4 and QG9.5 are candidates for removal: not needed.
 
 ## Design Principles
 

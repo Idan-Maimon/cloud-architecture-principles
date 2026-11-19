@@ -13,7 +13,7 @@ Measures marked `N` are placeholders to be calibrated. Departments may set stric
 | [QG3 Performance Efficiency](qg03-performance-efficiency.md) | Performance efficiency | Performance efficiency | Performance optimization |
 | [QG4 Operability](qg04-operability.md) | Maintainability, Interaction capability | Operational excellence | Operational excellence |
 | [QG5 Flexibility](qg05-flexibility.md) | Flexibility | — | Design for change, Decouple |
-| [QG6 Interoperability](qg06-interoperability.md) | Compatibility | — | — |
+| [QG6 Interoperability](qg06-interoperability.md) *(candidate for removal)* | Compatibility | — | — |
 | [QG7 Consumability](qg07-consumability.md) | Interaction capability, Functional suitability | — | Document your architecture |
 | [QG8 Safety](qg08-safety.md) *(candidate for removal)* | Safety | — | — |
 | [QG9 Cost Efficiency](qg09-cost-efficiency.md) | Performance efficiency (resource utilization) | Cost optimization | Cost optimization |

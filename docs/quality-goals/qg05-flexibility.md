@@ -17,20 +17,13 @@ Every service and infrastructure component depends only on the *capability* it c
 
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
-| QG5.1 | Replace an implementation | A capability provider is replaced (e.g. one hypervisor with another, a VM with bare metal or a cloud instance, one storage vendor with another) | Consuming services keep working unchanged | Seamless to consumers: they are not aware of changes in the service backend |
-| QG5.2 | Add a provider *(candidate for removal)* | A new implementation of an existing capability is introduced | It becomes available through the existing contract | Onboarding touches only the new adapter; no changes to the platform core or to consumers |
-| QG5.3 | Run providers side by side *(candidate for removal)* | Two implementations of the same capability serve production together | Consumers can't tell them apart, except for advertised characteristics (performance class, location, cost) | The same conformance suite passes on every provider |
+| QG5.1 | Replace or exit a provider | A capability provider is replaced or exited (e.g. one hypervisor with another, a VM with bare metal or a cloud instance, one storage vendor with another) | Consuming services keep working unchanged | Seamless to consumers: they are not aware of changes in the service backend. Every provider has an exit plan (ADR: exit cost, steps, considerations), reviewed at least every N months |
 | QG5.4 | Exit a provider *(candidate for removal)* | A strategic decision is made to leave a vendor or cloud | Workloads are moved within a planned window | Exit plan documented per provider; exit effort estimated and bounded |
 | QG5.5 | Install in a new location *(candidate to recreate)* | A service is needed in a new site or environment | It is deployed from code alone | 0 manual steps; deployed from the same repository and pipeline |
-| QG5.6 | Adapt to an environment *(candidate for removal)* | A service runs in dev, staging, prod and every site | It behaves the same in each, differing only by configuration | 0 forks per environment |
 
-QG5.2 and QG5.3 are candidates for removal: not needed.
-
-QG5.4 is a candidate for removal: same as QG5.1.
+QG5.4 is a candidate for removal: merged into QG5.1.
 
 QG5.5 is a candidate to be recreated as **Transferability**: a service is not bound to a single network or physical location, and can be deployed on multiple sites and networks.
-
-QG5.6 is a candidate for removal: not needed.
 
 ## Design Principles
 
