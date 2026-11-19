@@ -1,4 +1,4 @@
-# QG5 — Flexibility (Replaceability)
+# QG5 — Flexibility
 
 **ISO/IEC 25010:2023:** Flexibility → Replaceability, Adaptability, Installability (`#flexible`)
 **Cloud frameworks:** Google Cloud — Design for change, Decouple your architecture
@@ -18,10 +18,7 @@ Every service and infrastructure component depends only on the *capability* it c
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
 | QG5.1 | Replace or exit a provider | A capability provider is replaced or exited (e.g. one hypervisor with another, a VM with bare metal or a cloud instance, one storage vendor with another) | Consuming services keep working unchanged | Seamless to consumers: they are not aware of changes in the service backend. Every provider has an exit plan (ADR: exit cost, steps, considerations), reviewed at least every N months |
-| QG5.4 | Exit a provider *(candidate for removal)* | A strategic decision is made to leave a vendor or cloud | Workloads are moved within a planned window | Exit plan documented per provider; exit effort estimated and bounded |
-| QG5.5 | Transferability | A service is needed on another site or network | It is deployed there unchanged: it is not bound to a single network or physical location | Deployable on multiple sites and networks; 0 manual steps, from the same repository and pipeline |
-
-QG5.4 is a candidate for removal: merged into QG5.1.
+| QG5.2 | Transferability | A service is needed on another site or network | It is deployed there unchanged: it is not bound to a single network or physical location | Deployable on multiple sites and networks; 0 manual steps, from the same repository and pipeline |
 
 ## Design Principles
 

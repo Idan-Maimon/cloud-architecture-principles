@@ -20,7 +20,7 @@ Every service delivers predictable, measured performance and is sized to demand.
 | QG3.1 | Data-plane latency | Requests under normal load | Responses within published targets | p95 ≤ N ms; p99 ≤ N ms |
 | QG3.2 | Lifecycle latency | A consumer runs R1–R4 (provision, modify, upgrade, decommission) | The operation completes in a deterministic time | p95 ≤ N minutes per operation |
 | QG3.3 | Capacity | Usage approaches the service's declared limit | Owners are alerted before saturation | Alert at ≥ N% of limit; limits published |
-| QG3.5 | Noisy neighbour | One tenant generates heavy load | Other tenants' performance stays within target | Other tenants' p99 unaffected beyond N% |
+| QG3.4 | Noisy neighbour | One tenant generates heavy load | Other tenants' performance stays within target | Other tenants' p99 unaffected beyond N% |
 
 ## Design Principles
 

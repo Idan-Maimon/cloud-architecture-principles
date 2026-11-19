@@ -19,8 +19,8 @@ Every service is operated through automation and can be observed, diagnosed and 
 |---|---|---|---|---|
 | QG4.1 | Everything as code | A change to infrastructure or configuration is needed | It is made through a version-controlled, reviewed pipeline | 0 manual changes in production; drift detected and alerted |
 | QG4.2 | Observability | A service is running | It emits metrics, logs and traces in the platform-standard format | 100% of services with SLO dashboards and alerts |
-| QG4.4 | Diagnosis | An incident occurs | On-call identifies the failing component | ≤ N minutes, using runbooks and dashboards |
-| QG4.6 | Learning | An incident is resolved | A blameless post-incident review is held and actions tracked | 100% of major incidents reviewed within N days |
+| QG4.3 | Diagnosis | An incident occurs | On-call identifies the failing component | ≤ N minutes, using runbooks and dashboards |
+| QG4.4 | Learning | An incident is resolved | A blameless post-incident review is held and actions tracked | 100% of major incidents reviewed within N days |
 
 ## Design Principles
 
