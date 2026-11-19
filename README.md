@@ -12,7 +12,7 @@ Principles, quality goals and design guidance for how services and infrastructur
 | Quality goals | [docs/quality-goals](docs/quality-goals/README.md) | Baseline qualities, with measurable scenarios |
 | Principles | [docs/principles](docs/principles) | Cross-cutting design principles |
 | Decisions | [docs/decisions](docs/decisions) | Architecture Decision Records (ADRs) |
-| Checklists | [docs/checklists](docs/checklists) | Review checklists for architects |
+| Scorecard | [docs/scorecard](docs/scorecard/README.md) | Checks for every quality goal scenario; ranks services and deployments (Bronze, Silver, Gold) |
 | Presentations | [presentations](presentations) | Slide decks |
 | Diagrams | [diagrams](diagrams) | Diagram sources |
 
