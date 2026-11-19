@@ -42,7 +42,6 @@ QG6.1 and QG6.3 are candidates to merge into [QG7.6 Stable, standard interface](
 - Is there a published deprecation policy?
 - Does any consumer depend on internals (database, file layout, private endpoints)?
 - Are event and data schemas versioned and published?
-- Are quotas and limits set on shared resources?
 
 ## Example
 

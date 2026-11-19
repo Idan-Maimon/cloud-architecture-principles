@@ -27,19 +27,15 @@ Every service delivers predictable, measured performance and is sized to demand.
 1. **Publish performance targets.** Every service states latency, throughput and lifecycle-operation times as SLOs.
 2. **Measure, don't guess.** Benchmark before release and monitor in production with the same metrics.
 3. **Know your limits.** Every service publishes its tested capacity limits and alerts before they are reached.
-4. **Scale horizontally.** Prefer adding instances to growing them; design for scale-out from the start.
-5. **Isolate tenants.** Use quotas, limits and resource classes so one consumer cannot degrade another.
-6. **Match resources to workload.** Offer resource classes (CPU, memory, storage tiers) and let consumers choose by need.
-7. **Test performance continuously.** Performance tests run in the pipeline and block regressions.
+4. **Isolate tenants.** Use quotas, limits and resource classes so one consumer cannot degrade another.
+5. **Match resources to workload.** Offer resource classes (CPU, memory, storage tiers) and let consumers choose by need.
 
 ## Review Checklist
 
 - Are latency, throughput and lifecycle-operation targets published?
 - Have capacity limits been tested and published?
 - Is there an alert before capacity is exhausted?
-- Can the service scale out without downtime?
 - Are tenants protected from noisy neighbours?
-- Does the pipeline detect performance regressions?
 
 ## Example
 

@@ -19,11 +19,9 @@ Every service and infrastructure component depends only on the *capability* it c
 |---|---|---|---|---|
 | QG5.1 | Replace or exit a provider | A capability provider is replaced or exited (e.g. one hypervisor with another, a VM with bare metal or a cloud instance, one storage vendor with another) | Consuming services keep working unchanged | Seamless to consumers: they are not aware of changes in the service backend. Every provider has an exit plan (ADR: exit cost, steps, considerations), reviewed at least every N months |
 | QG5.4 | Exit a provider *(candidate for removal)* | A strategic decision is made to leave a vendor or cloud | Workloads are moved within a planned window | Exit plan documented per provider; exit effort estimated and bounded |
-| QG5.5 | Install in a new location *(candidate to recreate)* | A service is needed in a new site or environment | It is deployed from code alone | 0 manual steps; deployed from the same repository and pipeline |
+| QG5.5 | Transferability | A service is needed on another site or network | It is deployed there unchanged: it is not bound to a single network or physical location | Deployable on multiple sites and networks; 0 manual steps, from the same repository and pipeline |
 
 QG5.4 is a candidate for removal: merged into QG5.1.
-
-QG5.5 is a candidate to be recreated as **Transferability**: a service is not bound to a single network or physical location, and can be deployed on multiple sites and networks.
 
 ## Design Principles
 
@@ -33,15 +31,12 @@ QG5.5 is a candidate to be recreated as **Transferability**: a service is not bo
 4. **Isolate vendor specifics behind adapters.** Provider-specific code lives in one replaceable module per provider. Nothing outside the adapter may import, call or assume provider internals.
 5. **Describe what you need, not where it runs.** Services declare requirements (CPU class, latency, durability, zone spread). Placement and provider selection are platform decisions.
 6. **Model the provider as an attribute, not a type.** Inventory, scheduling and billing treat the provider as one property of a resource. They don't have a separate code path per provider.
-7. **Conformance over trust.** A provider is accepted only when it passes the capability's conformance suite. That suite is how replaceability is proven.
-8. **Keep data portable.** Data is stored in open, exportable formats, with a tested path to move it out.
-9. **Every lock-in is an explicit decision.** Lock-in is allowed when it pays off, but it must be recorded as an ADR with its rationale, the exit cost and a review date.
+7. **Keep data portable.** Data is stored in open, exportable formats, with a tested path to move it out.
+8. **Every lock-in is an explicit decision.** Lock-in is allowed when it pays off, but it must be recorded as an ADR with its rationale, the exit cost and a review date.
 
 ## Review Checklist
 
 - Does any service reference a specific vendor, product or cloud outside an adapter?
-- Is there a contract and a conformance suite for each capability the service consumes?
-- Could a second provider be added without touching consumers?
 - Is every proprietary dependency recorded as an ADR with an exit cost?
 - Can the service be installed in a new site from code alone?
 

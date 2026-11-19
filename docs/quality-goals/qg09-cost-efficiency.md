@@ -39,10 +39,8 @@ These follow the AWS cost optimization design principles, adapted for a private 
 ## Review Checklist
 
 - Is every resource tagged with owner, cost centre and environment?
-- Do non-production environments scale down outside working hours?
 - Does the service report utilisation and cost per unit of output?
 - Is there a right-sizing process for over-provisioned resources?
-- Is the team using platform services where they exist?
 - Does each department receive a monthly showback report?
 
 ## Example
