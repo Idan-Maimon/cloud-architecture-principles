@@ -18,11 +18,12 @@ Every unit of capacity is attributed to an owner, justified by business value an
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
 | QG9.1 | Attribution | A resource is created | It carries owner, cost centre and environment tags | 100% tagged; untagged resources rejected |
-| QG9.2 | Consumption model | Non-production environments outside working hours | They scale to zero or are scheduled off | ≥ N% reduction in non-production off-hours usage |
+| QG9.2 | Opportunism | A resource is allocated but not claimed by its owner | Other consumers can claim it, knowing the owner may take it back at any moment | ≥ N% of unclaimed capacity available for opportunistic use |
 | QG9.3 | Efficiency | A service reports its consumption | Utilisation and cost per unit of business output are visible | Reported monthly per service and per department |
-| QG9.4 | Right-sizing | A resource is over-provisioned | The owner receives a right-sizing recommendation | Recommendations issued for resources below N% utilisation |
-| QG9.5 | Showback | A month closes | Each department sees its usage and cost | Showback report per department every month |
-| QG9.6 | Build vs reuse | A team plans to build its own infrastructure capability | It uses the platform service unless an ADR justifies otherwise | 0 unjustified duplicate capabilities |
+| QG9.4 | Right-sizing *(candidate for removal)* | A resource is over-provisioned | The owner receives a right-sizing recommendation | Recommendations issued for resources below N% utilisation |
+| QG9.5 | Showback *(candidate for removal)* | A month closes | Each department sees its usage and cost | Showback report per department every month |
+
+QG9.4 and QG9.5 are candidates for removal: not needed.
 
 ## Design Principles
 
@@ -38,10 +39,8 @@ These follow the AWS cost optimization design principles, adapted for a private 
 ## Review Checklist
 
 - Is every resource tagged with owner, cost centre and environment?
-- Do non-production environments scale down outside working hours?
 - Does the service report utilisation and cost per unit of output?
 - Is there a right-sizing process for over-provisioned resources?
-- Is the team using platform services where they exist?
 - Does each department receive a monthly showback report?
 
 ## Example

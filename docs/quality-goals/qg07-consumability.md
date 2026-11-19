@@ -18,10 +18,15 @@ A consumer can find, understand and use any service without help from the team t
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
 | QG7.1 | Self-service | A consumer needs to provision, modify, upgrade or decommission an instance (R1–R4) | They do it through API, CLI or portal | 0 tickets for routine operations |
-| QG7.2 | Discoverability | A consumer looks for a capability | They find the service in the central catalogue | 100% of services listed with documentation, API reference, examples and SLO |
+| QG7.2 | Discoverability | A consumer looks for a capability | They find the service in the central catalogue, with its documentation, API reference, examples and SLO | 100% of services listed with documentation, API reference, examples and SLO |
 | QG7.3 | Functional correctness | A service is released | It passes its published conformance suite | 100% pass rate before release |
 | QG7.4 | Time to first use | A new consumer starts using a service | They succeed using the documentation alone | ≤ N minutes to first successful instance |
-| QG7.5 | Error protection | A consumer submits an invalid or risky request | It is rejected with a clear, actionable message | 100% of validation errors explain how to fix them |
+| QG7.5 | Error protection *(candidate for removal)* | A consumer submits an invalid or risky request | It is rejected with a clear, actionable message | 100% of validation errors explain how to fix them |
+| QG7.6 | Stable, standard interface *(new: merged from QG6.1 + QG6.3)* | A consumer integrates with the service, or the service changes its API | The consumer uses a documented, versioned API based on open standards, and existing consumers keep working | 100% of services expose a versioned API (OpenAPI, AsyncAPI for events, gRPC, OIDC, S3, CSI…); breaking changes only in a new version, with a deprecation period ≥ N months |
+
+QG7.5 is a candidate for removal: not needed.
+
+QG7.6 is a new scenario: QG6.1 Standard interface and QG6.3 Backward compatibility merged, plus events (AsyncAPI) from QG6.4.
 
 ## Design Principles
 

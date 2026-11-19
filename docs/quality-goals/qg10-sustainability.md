@@ -3,6 +3,8 @@
 **ISO/IEC 25010:2023:** not a product quality characteristic; related to Performance efficiency → Resource utilization
 **Cloud frameworks:** AWS — Sustainability; Google Cloud — Sustainability
 
+> **Candidate for removal:** the entire QG10 Sustainability goal. Reason: similar to [QG2 Reliability](qg02-reliability.md).
+
 ## Statement
 
 Our energy and hardware footprint goes down as utilisation goes up. Every service is designed to deliver its outcome with the least energy, hardware and waste.
