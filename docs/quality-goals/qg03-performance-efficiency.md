@@ -39,4 +39,4 @@ Every service delivers predictable, measured performance and is sized to demand.
 
 ## Example
 
-A Kubernetes-as-a-service offering publishes "cluster provisioned in ≤ N minutes at p95", benchmarks every release against the previous one, enforces per-tenant quotas, and alerts the platform team when a site reaches N% of its node capacity.
+A Kubernetes-as-a-service offering publishes "cluster provisioned in ≤ N minutes at p95", enforces per-tenant quotas, and alerts the platform team when a site reaches N% of its node capacity.

@@ -32,9 +32,8 @@ These follow the AWS cost optimization design principles, adapted for a private 
 1. **Implement cloud financial management.** Cost is owned as a capability with dedicated people, processes and reporting.
 2. **Adopt a consumption model.** Consumers use what they need and release what they do not; capacity follows demand.
 3. **Measure overall efficiency.** Track business output against the cost of delivering it.
-4. **Stop undifferentiated heavy lifting.** Use platform services instead of building and running your own.
-5. **Analyse and attribute expenditure.** Every resource is attributed to an owner; usage and cost are transparent.
-6. **Make cost a design input.** Cost is reviewed alongside performance and reliability in every design.
+4. **Analyse and attribute expenditure.** Every resource is attributed to an owner; usage and cost are transparent.
+5. **Make cost a design input.** Cost is reviewed alongside performance and reliability in every design.
 
 ## Review Checklist
 
@@ -45,4 +44,4 @@ These follow the AWS cost optimization design principles, adapted for a private 
 
 ## Example
 
-A department's development clusters scale to zero every evening and weekend, every VM carries cost-centre tags, and the monthly showback report shows cost per transaction for their application, with right-sizing recommendations for idle databases.
+Capacity a department has reserved but is not using is claimed by other teams for batch work, which give it back as soon as the owner needs it; every VM carries cost-centre tags; and the monthly showback report shows cost per transaction for their application, with right-sizing recommendations for idle databases.

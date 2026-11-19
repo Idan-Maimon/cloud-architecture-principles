@@ -40,4 +40,4 @@ Every service is operated through automation and can be observed, diagnosed and 
 
 ## Example
 
-A messaging service is deployed entirely from Git through a pipeline with canary analysis; when error rates rise during a rollout, it rolls back automatically, pages on-call with a linked runbook, and a blameless review follows within N days.
+A messaging service is deployed entirely from Git through a pipeline; when error rates rise, it pages on-call with a linked runbook and dashboards that point to the failing component, and a blameless review follows within N days.
