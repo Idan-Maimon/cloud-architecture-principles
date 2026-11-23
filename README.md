@@ -4,6 +4,8 @@ Principles, quality goals and design guidance for how services and infrastructur
 
 **Audience:** engineers, service developers and architects.
 
+🎤 **[View the presentation](https://idan-maimon.github.io/cloud-architecture-principles/presentations/)** — opens in the browser
+
 ## Contents
 
 | Area | Path | Purpose |
@@ -13,7 +15,7 @@ Principles, quality goals and design guidance for how services and infrastructur
 | Principles | [docs/principles](docs/principles) | Cross-cutting design principles |
 | Decisions | [docs/decisions](docs/decisions) | Architecture Decision Records (ADRs) |
 | Scorecard | [docs/scorecard](docs/scorecard/README.md) | Checks for every quality goal scenario; ranks services and deployments (Bronze, Silver, Gold) |
-| Presentations | [presentations](presentations) | Slide decks |
+| Presentations | [presentations](presentations) | Slide decks — **[open live](https://idan-maimon.github.io/cloud-architecture-principles/presentations/)**, or open `index.html` locally (works offline) |
 | Diagrams | [diagrams](diagrams) | Diagram sources |
 
 ## Quality Goals
