@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Architecture Principles</title>
+  <link rel="stylesheet" href="reveal.js/reset.css">
+  <link rel="stylesheet" href="reveal.js/reveal.css">
+  <link rel="stylesheet" href="reveal.js/theme/white.css">
+  <style>
+    :root {
+      --accent: #1f5fae;
+      --accent-soft: #e8f0fb;
+      --navy: #12324f;
+      --good: #2e7d32;
+      --good-soft: #e8f5e9;
+      --bad: #c62828;
+      --bad-soft: #fde3e3;
+      --warn: #e5712f;
+      --warn-soft: #fdeadf;
+      --line: #c7d1de;
+      --muted: #5f6b7a;
+      --r-heading-color: #12324f;
+      --r-link-color: var(--accent);
+      --r-main-font-size: 32px;
+    }
+    .reveal h1, .reveal h2 { text-transform: none; letter-spacing: -0.01em; }
+    .reveal h2 { font-size: 1.5em; margin-bottom: 0.5em; }
+    .reveal .subtitle { color: var(--muted); font-size: 0.8em; }
+    .reveal .small { font-size: 0.66em; color: var(--muted); }
+    .reveal .accent { color: var(--accent); font-weight: 600; }
+
+    /* cards */
+    .cards { display: flex; gap: 0.6em; justify-content: center; align-items: stretch; }
+    .card { flex: 1; background: var(--accent-soft); border-radius: 12px; padding: 0.6em 0.7em; font-size: 0.78em;
+            text-align: left; border-top: 6px solid var(--accent); }
+    .card h3 { font-size: 1.15em; margin: 0 0 0.3em; color: var(--accent); text-transform: none; }
+    .card p { margin: 0.25em 0; }
+    .card.navy { border-top-color: var(--navy); } .card.navy h3 { color: var(--navy); }
+
+    /* quality goal slides */
+    .qg-head { display: flex; align-items: center; gap: 0.5em; margin-bottom: 0.4em; }
+    .qg-id { background: var(--navy); color: #fff; font-weight: 700; font-size: 0.7em; padding: 0.15em 0.55em; border-radius: 8px; }
+    .qg-head h2 { margin: 0; }
+    .tag { margin-left: auto; font-size: 0.5em; font-weight: 600; padding: 0.3em 0.8em; border-radius: 999px; }
+    .tag.run { background: var(--good-soft); color: var(--good); }
+    .tag.built { background: var(--accent-soft); color: var(--accent); }
+    .tag.review { background: var(--warn-soft); color: var(--warn); }
+    .qg-body { display: flex; gap: 0.8em; align-items: center; }
+    .scene { flex: 0 0 600px; background: #f7f9fc; border-radius: 16px; padding: 10px; }
+    .scene svg { display: block; width: 580px; height: 330px; }
+    .qg-text { flex: 1; text-align: left; font-size: 0.66em; }
+    .qg-text .statement { font-size: 1.05em; color: var(--navy); margin: 0 0 0.6em; line-height: 1.35; }
+    .qg-text ul { list-style: none; margin: 0; padding: 0; }
+    .qg-text li { margin: 0.35em 0; line-height: 1.3; display: grid; grid-template-columns: 3.6em 1fr; }
+    .qg-text li b { color: var(--accent); }
+    .qg-text .maps { margin-top: 0.8em; font-size: 0.8em; color: var(--muted); border-top: 1px solid #dfe5ee; padding-top: 0.5em; }
+
+    /* svg vocabulary */
+    .scene text { font-family: "Source Sans Pro", Helvetica, sans-serif; }
+    .lbl { font-size: 15px; font-weight: 600; fill: var(--navy); }
+    .sub { font-size: 12px; fill: var(--muted); }
+    .wht { font-size: 13px; font-weight: 700; fill: #fff; }
+    .box { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+    .lane { stroke: var(--line); stroke-width: 2; }
+
+    /* requirements slide */
+    .life { display: flex; flex-direction: column; align-items: center; gap: 0.5em; }
+    .life-stage { position: relative; height: 170px; width: 100%; display: flex; align-items: center; justify-content: center; }
+    .inst { width: 170px; height: 100px; border-radius: 14px; background: var(--accent); color: #fff; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-weight: 700; font-size: 0.7em; position: relative; }
+    .inst .ver { position: absolute; top: 6px; right: 10px; font-size: 0.7em; font-weight: 600; opacity: 0.9; }
+    .inst .ver.v2 { opacity: 0; }
+    .status { position: relative; height: 1.2em; width: 100%; font-size: 0.6em; color: var(--muted); }
+    .status span { position: absolute; left: 0; right: 0; opacity: 0; }
+    .reqs { display: flex; gap: 0.5em; justify-content: center; }
+    .req { font-size: 0.56em; padding: 0.45em 0.9em; border-radius: 10px; background: var(--accent-soft); color: var(--navy); min-width: 8.5em; text-align: center; }
+    .req b { display: block; font-size: 1.3em; }
+
+    /* stimulus -> response -> measure */
+    .srm { display: flex; align-items: stretch; gap: 0.4em; justify-content: center; margin-top: 0.4em; }
+    .srm .s { flex: 1; border-radius: 12px; padding: 0.5em 0.6em; font-size: 0.66em; text-align: left; background: var(--accent-soft); }
+    .srm .s h4 { margin: 0 0 0.3em; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+    .srm .arrow { align-self: center; color: var(--accent); font-size: 1em; }
+    .timer { height: 14px; background: #fff; border-radius: 7px; margin-top: 0.5em; overflow: hidden; position: relative; }
+    .timer i { display: block; height: 100%; width: 0; background: var(--good); border-radius: 7px; }
+    .timer em { position: absolute; left: 75%; top: -3px; bottom: -3px; width: 2px; background: var(--navy); }
+    .srm .fragment.visible .timer i { animation: fillTo 2.5s ease-out forwards; }
+    @keyframes fillTo { to { width: 62%; } }
+
+    /* overview grid */
+    .qgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.45em; }
+    .qcell { background: var(--accent-soft); border-radius: 12px; padding: 0.45em 0.5em; text-align: left; font-size: 0.6em; }
+    .qcell b { display: block; color: var(--accent); font-size: 0.85em; }
+    .qcell span { font-size: 1.25em; font-weight: 700; color: var(--navy); }
+    .qcell.run { background: var(--good-soft); } .qcell.run b { color: var(--good); }
+    .qcell.rev { background: #fff; border: 2px dashed var(--line); }
+    .qcell em { display: block; font-style: normal; font-size: 0.8em; color: var(--muted); margin-top: 0.2em; }
+    .reveal section.present .qcell { animation: pop 0.5s ease both; }
+    .reveal section.present .qcell:nth-child(2) { animation-delay: .08s } .reveal section.present .qcell:nth-child(3) { animation-delay: .16s }
+    .reveal section.present .qcell:nth-child(4) { animation-delay: .24s } .reveal section.present .qcell:nth-child(5) { animation-delay: .32s }
+    .reveal section.present .qcell:nth-child(6) { animation-delay: .40s } .reveal section.present .qcell:nth-child(7) { animation-delay: .48s }
+    .reveal section.present .qcell:nth-child(8) { animation-delay: .56s }
+    @keyframes pop { from { opacity: 0; transform: scale(0.7) translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* principles */
+    .plist { text-align: left; font-size: 0.7em; margin: 0 auto; width: 88%; }
+    .plist li { margin: 0.35em 0; }
+    .plist .draft { color: var(--muted); }
+
+    /* scorecard stairs */
+    .stairs-wrap { display: flex; gap: 0.8em; align-items: center; }
+    .rules { flex: 1; text-align: left; font-size: 0.64em; }
+    .rules li { margin: 0.45em 0; }
+
+    /* ---------- animations (run while the slide is shown) ---------- */
+    /* requirements lifecycle, 12s */
+    .reveal section.present .inst { animation: life 12s ease-in-out infinite; }
+    @keyframes life {
+      0% { transform: scale(0); opacity: 0; } 8% { transform: scale(1); opacity: 1; }
+      22% { transform: scale(1.06); } 29% { transform: scale(1); } 36% { transform: scale(1.06); } 40% { transform: scale(1); }
+      48%, 75% { transform: scale(1.45, 1); opacity: 1; } 86%, 100% { transform: scale(0.2); opacity: 0; } }
+    .reveal section.present .inst .v1 { animation: v1 12s infinite; }
+    .reveal section.present .inst .v2 { animation: v2 12s infinite; }
+    @keyframes v1 { 0%, 58% { opacity: .9 } 62%, 100% { opacity: 0 } }
+    @keyframes v2 { 0%, 58% { opacity: 0 } 62%, 100% { opacity: .9 } }
+    .reveal section.present .status span:nth-child(1) { animation: st1 12s infinite; }
+    .reveal section.present .status span:nth-child(2) { animation: st2 12s infinite; }
+    .reveal section.present .status span:nth-child(3) { animation: st3 12s infinite; }
+    .reveal section.present .status span:nth-child(4) { animation: st4 12s infinite; }
+    .reveal section.present .status span:nth-child(5) { animation: st5 12s infinite; }
+    @keyframes st1 { 0%, 13% { opacity: 1 } 15%, 100% { opacity: 0 } }
+    @keyframes st2 { 0%, 14% { opacity: 0 } 16%, 40% { opacity: 1 } 42%, 100% { opacity: 0 } }
+    @keyframes st3 { 0%, 41% { opacity: 0 } 43%, 55% { opacity: 1 } 57%, 100% { opacity: 0 } }
+    @keyframes st4 { 0%, 56% { opacity: 0 } 58%, 74% { opacity: 1 } 76%, 100% { opacity: 0 } }
+    @keyframes st5 { 0%, 75% { opacity: 0 } 77%, 95% { opacity: 1 } 97%, 100% { opacity: 0 } }
+    .reveal section.present .req.r1 { animation: hl1 12s infinite; }
+    .reveal section.present .req.r5 { animation: hl5 12s infinite; }
+    .reveal section.present .req.r2 { animation: hl2 12s infinite; }
+    .reveal section.present .req.r3 { animation: hl3 12s infinite; }
+    .reveal section.present .req.r4 { animation: hl4 12s infinite; }
+    @keyframes hl1 { 0%, 13% { background: var(--accent); color: #fff } 15%, 100% { background: var(--accent-soft); color: var(--navy) } }
+    @keyframes hl5 { 0%, 14% { background: var(--accent-soft); color: var(--navy) } 16%, 75% { background: var(--accent); color: #fff } 77%, 100% { background: var(--accent-soft); color: var(--navy) } }
+    @keyframes hl2 { 0%, 41% { background: var(--accent-soft); color: var(--navy) } 43%, 55% { background: var(--navy); color: #fff } 57%, 100% { background: var(--accent-soft); color: var(--navy) } }
+    @keyframes hl3 { 0%, 56% { background: var(--accent-soft); color: var(--navy) } 58%, 74% { background: var(--navy); color: #fff } 76%, 100% { background: var(--accent-soft); color: var(--navy) } }
+    @keyframes hl4 { 0%, 75% { background: var(--accent-soft); color: var(--navy) } 77%, 95% { background: var(--accent); color: #fff } 97%, 100% { background: var(--accent-soft); color: var(--navy) } }
+
+    /* QG1 zero trust, 6s */
+    .reveal section.present .q1-pass { animation: q1pass 6s linear infinite both; }
+    .reveal section.present .q1-block { animation: q1block 6s linear infinite both; animation-delay: 2s; }
+    .reveal section.present .q1-pass.d4 { animation-delay: 4s; }
+    @keyframes q1pass { 0% { transform: translateX(0); opacity: 0 } 6% { opacity: 1 } 40%, 50% { transform: translateX(255px) }
+                        85% { transform: translateX(470px); opacity: 1 } 95%, 100% { transform: translateX(470px); opacity: 0 } }
+    @keyframes q1block { 0% { transform: translateX(0); opacity: 0 } 6% { opacity: 1 } 40% { transform: translateX(240px) }
+                         46%, 75% { transform: translateX(222px); opacity: 1 } 90%, 100% { transform: translateX(222px); opacity: 0 } }
+    .reveal section.present .q1-ok { animation: q1ok 6s infinite both; }
+    .reveal section.present .q1-ok.d4 { animation-delay: 4s; }
+    .reveal section.present .q1-no { animation: q1no 6s infinite both; animation-delay: 2s; }
+    @keyframes q1ok { 0%, 38% { opacity: 0 } 42%, 58% { opacity: 1 } 64%, 100% { opacity: 0 } }
+    @keyframes q1no { 0%, 38% { opacity: 0 } 44%, 74% { opacity: 1 } 80%, 100% { opacity: 0 } }
+    .q1-ok, .q1-no { opacity: 0; }
+
+    /* QG2 zone loss, 9s cycle; traffic 1.6s */
+    .dot { fill: var(--accent); }
+    .reveal section.present .q2-a { animation: q2a 1.6s linear infinite; }
+    .reveal section.present .q2-b { animation: q2b 1.6s linear infinite, q2bfail 9s infinite; }
+    .reveal section.present .q2-c { animation: q2c 1.6s linear infinite; }
+    .reveal section.present .q2-ax { animation: q2a 1.6s linear infinite, q2extra 9s infinite; }
+    .reveal section.present .q2-cx { animation: q2c 1.6s linear infinite, q2extra 9s infinite; }
+    .reveal section.present .dl { animation-delay: .8s, 0s; }
+    .reveal section.present .dq { animation-delay: .4s, 0s; }
+    .reveal section.present .dr { animation-delay: 1.2s, 0s; }
+    @keyframes q2a { from { transform: translate(0, 0) } to { transform: translate(294px, -95px) } }
+    @keyframes q2b { from { transform: translate(0, 0) } to { transform: translate(294px, 0) } }
+    @keyframes q2c { from { transform: translate(0, 0) } to { transform: translate(294px, 95px) } }
+    @keyframes q2bfail { 0%, 30% { opacity: 1 } 32%, 82% { opacity: 0 } 85%, 100% { opacity: 1 } }
+    @keyframes q2extra { 0%, 31% { opacity: 0 } 33%, 82% { opacity: 1 } 84%, 100% { opacity: 0 } }
+    .q2-ax, .q2-cx { opacity: 0; }
+    .reveal section.present .q2-zoneb { animation: q2zone 9s infinite; }
+    @keyframes q2zone { 0%, 30% { fill: var(--accent-soft); stroke: var(--accent) } 33%, 82% { fill: var(--bad-soft); stroke: var(--bad) } 85%, 100% { fill: var(--accent-soft); stroke: var(--accent) } }
+    .reveal section.present .q2-nodeb { animation: q2node 9s infinite; }
+    @keyframes q2node { 0%, 30% { fill: var(--accent) } 33%, 82% { fill: var(--bad) } 85%, 100% { fill: var(--accent) } }
+    .reveal section.present .q2-lost { animation: q2extra 9s infinite; }
+    .q2-lost { opacity: 0; }
+    .reveal section.present .q2-slo { animation: q2slo 9s infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes q2slo { 0%, 33% { transform: scale(1) } 38% { transform: scale(1.06) } 43%, 100% { transform: scale(1) } }
+
+    /* QG3 noisy neighbour, 8s */
+    .bar { transform-box: fill-box; transform-origin: bottom; }
+    .reveal section.present .q3-a { animation: q3wob 2.4s ease-in-out infinite alternate; }
+    .reveal section.present .q3-c { animation: q3wob 2.9s ease-in-out infinite alternate-reverse; }
+    @keyframes q3wob { from { transform: scaleY(.42) } to { transform: scaleY(.56) } }
+    .reveal section.present .q3-b { animation: q3grow 8s ease-in-out infinite; }
+    @keyframes q3grow { 0% { transform: scaleY(.35); fill: var(--accent) } 35% { transform: scaleY(1); fill: var(--accent) }
+                        40%, 85% { transform: scaleY(1); fill: var(--warn) } 100% { transform: scaleY(.35); fill: var(--accent) } }
+    .reveal section.present .q3-thr { animation: q3thr 8s infinite; }
+    @keyframes q3thr { 0%, 36% { opacity: 0 } 40%, 85% { opacity: 1 } 90%, 100% { opacity: 0 } }
+    .q3-thr { opacity: 0; }
+    .needle { transform-box: view-box; transform-origin: 455px 250px; }
+    .reveal section.present .needle { animation: q3needle 1.7s ease-in-out infinite alternate; }
+    @keyframes q3needle { from { transform: rotate(-62deg) } to { transform: rotate(-44deg) } }
+
+    /* QG4 git -> pipeline -> cluster, drift and reconcile, 10s */
+    .reveal section.present .q4-commit { animation: q4commit 10s linear infinite; }
+    @keyframes q4commit { 0% { transform: translateX(0); opacity: 0 } 3% { opacity: 1 } 12%, 16% { transform: translateX(205px) }
+                          26% { transform: translateX(410px); opacity: 1 } 29%, 100% { transform: translateX(410px); opacity: 0 } }
+    .reveal section.present .q4-cluster { animation: q4cluster 10s infinite; }
+    @keyframes q4cluster { 0%, 44% { fill: var(--good-soft); stroke: var(--good) } 47%, 70% { fill: var(--warn-soft); stroke: var(--warn) } 74%, 100% { fill: var(--good-soft); stroke: var(--good) } }
+    .reveal section.present .q4-wrench { animation: q4wrench 10s infinite; }
+    @keyframes q4wrench { 0%, 34% { transform: translateY(60px); opacity: 0 } 38% { opacity: 1 } 45% { transform: translateY(0); opacity: 1 } 55%, 100% { transform: translateY(0); opacity: 0 } }
+    .q4-wrench { opacity: 0; }
+    .reveal section.present .q4-drift { animation: q4drift 10s infinite; }
+    @keyframes q4drift { 0%, 45% { opacity: 0 } 48%, 70% { opacity: 1 } 73%, 100% { opacity: 0 } }
+    .reveal section.present .q4-ok { animation: q4ok 10s infinite; }
+    @keyframes q4ok { 0%, 26% { opacity: 0 } 29%, 44% { opacity: 1 } 47%, 72% { opacity: 0 } 75%, 100% { opacity: 1 } }
+    .q4-drift { opacity: 0; }
+    .q4-sync { stroke-dasharray: 520; stroke-dashoffset: 520; opacity: 0; }
+    .reveal section.present .q4-sync { animation: q4sync 10s infinite; }
+    @keyframes q4sync { 0%, 54% { stroke-dashoffset: 520; opacity: 0 } 56% { stroke-dashoffset: 520; opacity: 1 } 70% { stroke-dashoffset: 0; opacity: 1 } 80%, 100% { stroke-dashoffset: 0; opacity: 0 } }
+    .reveal section.present .q4-synclbl { animation: q4synclbl 10s infinite; }
+    @keyframes q4synclbl { 0%, 56% { opacity: 0 } 60%, 78% { opacity: 1 } 82%, 100% { opacity: 0 } }
+    .q4-synclbl { opacity: 0; }
+
+    /* QG5 provider swap, 10s alternate */
+    .reveal section.present .q5-flow { animation: q5flow 1.2s linear infinite; }
+    .reveal section.present .q5-flow.dl { animation-delay: .6s; }
+    @keyframes q5flow { 0% { transform: translateY(0); opacity: 0 } 15% { opacity: 1 } 85% { opacity: 1 } 100% { transform: translateY(56px); opacity: 0 } }
+    .reveal section.present .q5-a { animation: q5a 10s ease-in-out infinite alternate; }
+    .reveal section.present .q5-b { animation: q5b 10s ease-in-out infinite alternate; }
+    @keyframes q5a { 0%, 35% { transform: translateX(0); opacity: 1 } 55%, 100% { transform: translateX(260px); opacity: 0 } }
+    @keyframes q5b { 0%, 45% { transform: translateX(-260px); opacity: 0 } 65%, 100% { transform: translateX(0); opacity: 1 } }
+    .q5-b { opacity: 0; }
+
+    /* QG6 self-service, 9s */
+    .reveal section.present .q6-cursor { animation: q6cursor 9s ease-in-out infinite; }
+    @keyframes q6cursor { 0%, 8% { transform: translate(0, 0) } 28%, 100% { transform: translate(-176px, -214px) } }
+    .reveal section.present .q6-click { animation: q6click 9s infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes q6click { 0%, 29% { transform: scale(.2); opacity: 0 } 31% { opacity: .8 } 38%, 100% { transform: scale(2.2); opacity: 0 } }
+    .q6-click { opacity: 0; }
+    .reveal section.present .q6-inst { animation: q6inst 9s infinite; }
+    @keyframes q6inst { 0%, 32% { opacity: 0; transform: translateY(10px) } 37%, 95% { opacity: 1; transform: none } 100% { opacity: 0 } }
+    .q6-inst { opacity: 0; }
+    .q6-prog { transform-box: fill-box; transform-origin: left; }
+    .reveal section.present .q6-prog { animation: q6prog 9s infinite; }
+    @keyframes q6prog { 0%, 37% { transform: scaleX(0) } 68%, 100% { transform: scaleX(1) } }
+    .reveal section.present .q6-ready { animation: q6ready 9s infinite; }
+    @keyframes q6ready { 0%, 68% { opacity: 0 } 72%, 95% { opacity: 1 } 100% { opacity: 0 } }
+    .q6-ready { opacity: 0; }
+    .reveal section.present .q6-v2 { animation: q6v2 9s infinite; }
+    @keyframes q6v2 { 0%, 74% { opacity: 0; transform: translateY(8px) } 78%, 95% { opacity: 1; transform: none } 100% { opacity: 0 } }
+    .q6-v2 { opacity: 0; }
+
+    /* QG7 opportunism, 10s */
+    .reveal section.present .q7-b { animation: q7b 10s infinite; }
+    .reveal section.present .q7-b.k5 { animation-delay: .25s; }
+    .reveal section.present .q7-b.k6 { animation-delay: .5s; }
+    @keyframes q7b { 0%, 18% { transform: translateY(-70px); opacity: 0 } 26%, 54% { transform: none; opacity: 1 } 62%, 100% { transform: translateY(-70px); opacity: 0 } }
+    .reveal section.present .q7-b6 { animation: q7b6 10s infinite .5s; }
+    @keyframes q7b6 { 0%, 18% { transform: translateY(-70px); opacity: 0 } 26%, 90% { transform: none; opacity: 1 } 98%, 100% { opacity: 0 } }
+    .q7-b, .q7-b6 { opacity: 0; }
+    .reveal section.present .q7-a { animation: q7a 10s infinite; }
+    @keyframes q7a { 0%, 55% { opacity: 0 } 61%, 92% { opacity: 1 } 98%, 100% { opacity: 0 } }
+    .q7-a { opacity: 0; }
+    .reveal section.present .q7-lbl1 { animation: q7l1 10s infinite; }
+    .reveal section.present .q7-lbl2 { animation: q7l2 10s infinite; }
+    @keyframes q7l1 { 0%, 22% { opacity: 0 } 27%, 52% { opacity: 1 } 56%, 100% { opacity: 0 } }
+    @keyframes q7l2 { 0%, 56% { opacity: 0 } 61%, 92% { opacity: 1 } 96%, 100% { opacity: 0 } }
+    .q7-lbl1, .q7-lbl2 { opacity: 0; }
+
+    /* QG8 consolidation, 10s */
+    .reveal section.present .q8-m1 { animation: q8m1 10s ease-in-out infinite; }
+    .reveal section.present .q8-m2 { animation: q8m2 10s ease-in-out infinite; }
+    .reveal section.present .q8-m3 { animation: q8m3 10s ease-in-out infinite; }
+    @keyframes q8m1 { 0%, 15% { transform: none } 40%, 90% { transform: translate(-280px, 44px) } 100% { transform: none } }
+    @keyframes q8m2 { 0%, 20% { transform: none } 45%, 90% { transform: translate(-280px, 44px) } 100% { transform: none } }
+    @keyframes q8m3 { 0%, 25% { transform: none } 50%, 90% { transform: translate(-280px, 44px) } 100% { transform: none } }
+    .reveal section.present .q8-off { animation: q8off 10s infinite; }
+    @keyframes q8off { 0%, 52% { fill: var(--accent-soft); stroke: var(--accent) } 58%, 90% { fill: #eceff3; stroke: var(--line) } 96%, 100% { fill: var(--accent-soft); stroke: var(--accent) } }
+    .reveal section.present .q8-offlbl { animation: q8offlbl 10s infinite; }
+    @keyframes q8offlbl { 0%, 54% { opacity: 0 } 60%, 90% { opacity: 1 } 95%, 100% { opacity: 0 } }
+    .q8-offlbl { opacity: 0; }
+
+    /* scorecard stairs, 10s */
+    .reveal section.present .sc-dot { animation: scdot 10s ease-in-out infinite; }
+    @keyframes scdot { 0%, 8% { transform: translate(0, 0) } 22%, 35% { transform: translate(150px, -78px) }
+                       48%, 62% { transform: translate(300px, -138px) } 76%, 92% { transform: translate(450px, -198px) } 100% { transform: translate(0, 0) } }
+    .reveal section.present .sc-l1 { animation: scl1 10s infinite; }
+    .reveal section.present .sc-l2 { animation: scl2 10s infinite; }
+    .reveal section.present .sc-l3 { animation: scl3 10s infinite; }
+    @keyframes scl1 { 0%, 20% { opacity: 0 } 24%, 94% { opacity: 1 } 100% { opacity: 0 } }
+    @keyframes scl2 { 0%, 46% { opacity: 0 } 50%, 94% { opacity: 1 } 100% { opacity: 0 } }
+    @keyframes scl3 { 0%, 74% { opacity: 0 } 78%, 94% { opacity: 1 } 100% { opacity: 0 } }
+    .sc-l1, .sc-l2, .sc-l3 { opacity: 0; }
+
+    /* respect reduced motion: show the end state, no movement */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal section * { animation: none !important; }
+      .q1-ok, .q6-inst, .q6-ready, .q6-v2, .sc-l1, .sc-l2, .sc-l3 { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- 1. Title -->
+  <section>
+    <h1 style="font-size:2.2em">Cloud Architecture Principles</h1>
+    <p class="subtitle">How every service in our private cloud is designed, built and checked</p>
+    <p class="small">Requirements · Quality goals · Principles · Scorecard</p>
+    <aside class="notes">
+      One shared language for "a good service": what it must do (requirements), how well (quality goals),
+      how we design it (principles), and how we check it (SLOs and the scorecard).
+    </aside>
+  </section>
+
+  <!-- 2. Why -->
+  <section>
+    <h2>Why</h2>
+    <div class="cards">
+      <div class="card"><h3>One language</h3><p>Every team describes service quality the same way: the same requirements, the same eight quality goals.</p></div>
+      <div class="card"><h3>Checkable</h3><p>Every quality goal is written as scenarios with a measure, so it can be checked instead of debated.</p></div>
+      <div class="card"><h3>Ready to scale</h3><p>One repeatable way to review, rank and improve hundreds of services and deployments.</p></div>
+    </div>
+    <p class="small" style="margin-top:1em">Built on ISO/IEC 25010:2023, the AWS Well-Architected Framework and the Google Cloud Architecture Framework</p>
+    <aside class="notes">
+      The vocabulary comes from ISO 25010; the pillars from AWS and Google. Nothing here is invented from scratch.
+    </aside>
+  </section>
+
+  <!-- 3. Requirements -->
+  <section>
+    <h2>Requirements: what every service does</h2>
+    <div class="life">
+      <div class="life-stage">
+        <div class="inst"><span class="ver v1">v1.0</span><span class="ver v2">v1.1</span>instance</div>
+      </div>
+      <div class="status">
+        <span>R1 Provision: a consumer obtains an instance on demand</span>
+        <span>R5 Use: the consumer accesses and uses it, for as long as it exists</span>
+        <span>R2 Modify: size, configuration and scale change</span>
+        <span>R3 Upgrade: the provider renews it: patches and versions</span>
+        <span>R4 Decommission: it is released, its resources and data disposed of</span>
+      </div>
+      <div class="reqs">
+        <div class="req r1"><b>R1</b>Provision</div>
+        <div class="req r5"><b>R5</b>Use</div>
+        <div class="req r2"><b>R2</b>Modify</div>
+        <div class="req r3"><b>R3</b>Upgrade</div>
+        <div class="req r4"><b>R4</b>Decommission</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:0.8em">A requirement is a <b>business operation</b>, not how the service is built (ADR-0001)</p>
+    <aside class="notes">
+      The animation follows one instance through its life. R5 Use was added after review: the most basic
+      expectation, "the thing I got still works", must be visible as a requirement.
+    </aside>
+  </section>
+
+  <!-- 4. Quality on requirement -->
+  <section>
+    <h2>A quality is always measured on a requirement</h2>
+    <div class="srm">
+      <div class="s fragment"><h4>Stimulus</h4>A tenant cluster upgrade is triggered<br><b class="accent">R3 Upgrade</b></div>
+      <div class="arrow fragment">→</div>
+      <div class="s fragment"><h4>Response</h4>The upgrade completes</div>
+      <div class="arrow fragment">→</div>
+      <div class="s fragment"><h4>Measure</h4>Done within 1.5 h<br><b class="accent">QG3 Performance</b>
+        <div class="timer"><i></i><em></em></div></div>
+    </div>
+    <p class="fragment" style="font-size:0.66em;margin-top:1em">If it takes 3 hours, it misses the measure, and the miss uses <b>error budget</b> in the SLA framework.</p>
+    <p class="small">The scenario form comes from SEI's ATAM (ADR-0002)</p>
+    <aside class="notes">
+      Click through: stimulus, response, measure. Neither a requirement nor a quality is useful alone.
+    </aside>
+  </section>
+
+  <!-- 5. Two kinds -->
+  <section>
+    <h2>Two kinds of quality, two ways to check them</h2>
+    <div class="cards">
+      <div class="card" style="border-top-color:var(--good)"><h3 style="color:var(--good)">Runtime</h3>
+        <p><b>QG2 Reliability · QG3 Performance</b></p>
+        <p>Seen every time an operation runs: did it work, how long did it take?</p>
+        <p>Checked with <b>SLOs and error budgets</b>, per requirement, in the SLA framework.</p></div>
+      <div class="card"><h3>Built-in</h3>
+        <p><b>QG1 · QG4 – QG8</b></p>
+        <p>Properties of how the service is built and run: security, operability, cost…</p>
+        <p>Checked with <b>automated checks, the scorecard and reviews</b>.</p></div>
+    </div>
+    <aside class="notes">
+      Runtime qualities are what the business sees. Built-in qualities make the runtime results achievable.
+    </aside>
+  </section>
+
+  <!-- 6. Eight quality goals -->
+  <section>
+    <h2>Eight quality goals</h2>
+    <div class="qgrid">
+      <div class="qcell"><b>QG1</b><span>Security</span><em>protected and accountable by default</em></div>
+      <div class="qcell run"><b>QG2</b><span>Reliability</span><em>keeps its SLO through any single failure</em></div>
+      <div class="qcell run"><b>QG3</b><span>Performance</span><em>predictable, measured, sized to demand</em></div>
+      <div class="qcell"><b>QG4</b><span>Operability</span><em>automated, observable, changed safely</em></div>
+      <div class="qcell"><b>QG5</b><span>Flexibility</span><em>depends on capabilities, not products</em></div>
+      <div class="qcell"><b>QG6</b><span>Consumability</span><em>found and used without help</em></div>
+      <div class="qcell"><b>QG7</b><span>Cost Efficiency</span><em>every unit owned and visible</em></div>
+      <div class="qcell rev"><b>QG8</b><span>Sustainability</span><em>under review</em></div>
+    </div>
+    <p class="small" style="margin-top:0.8em">Green: runtime, checked with SLOs · Blue: built-in, checked by the scorecard</p>
+    <aside class="notes">
+      The review in November cut the list from ten goals to eight and removed or merged many scenarios.
+      QG8 Sustainability is still under review.
+    </aside>
+  </section>
+
+  <!-- 7. QG1 Security -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG1</span><h2>Security</h2><span class="tag built">Built-in · scorecard</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="Requests with an identity pass the identity check; a request without one is blocked">
+          <line class="lane" x1="20" y1="170" x2="430" y2="170"/>
+          <text class="lbl" x="300" y="62" text-anchor="middle">Identity check</text>
+          <rect x="292" y="80" width="16" height="180" rx="8" fill="#12324f"/>
+          <rect class="box" x="430" y="100" width="150" height="140" rx="14"/>
+          <text class="lbl" x="505" y="150" text-anchor="middle">Service</text>
+          <g transform="translate(493,170)">
+            <rect x="0" y="10" width="24" height="20" rx="3" fill="#1f5fae"/>
+            <path d="M5 10 v-6 a7 7 0 0 1 14 0 v6" fill="none" stroke="#1f5fae" stroke-width="3"/>
+          </g>
+          <text class="sub" x="505" y="222" text-anchor="middle">data encrypted</text>
+          <g class="q1-pass"><circle cx="30" cy="170" r="17" fill="#1f5fae"/><text class="wht" x="30" y="175" text-anchor="middle">ID</text></g>
+          <g class="q1-block"><circle cx="30" cy="170" r="17" fill="#9aa6b5"/><text class="wht" x="30" y="175" text-anchor="middle">?</text></g>
+          <g class="q1-pass d4"><circle cx="30" cy="170" r="17" fill="#1f5fae"/><text class="wht" x="30" y="175" text-anchor="middle">ID</text></g>
+          <g class="q1-ok"><circle cx="300" cy="292" r="15" fill="#2e7d32"/><text class="wht" x="300" y="297" text-anchor="middle">✓</text></g>
+          <g class="q1-ok d4"><circle cx="300" cy="292" r="15" fill="#2e7d32"/><text class="wht" x="300" y="297" text-anchor="middle">✓</text></g>
+          <g class="q1-no"><circle cx="300" cy="292" r="15" fill="#c62828"/><text class="wht" x="300" y="297" text-anchor="middle">✕</text>
+            <text class="sub" x="322" y="297">no identity: blocked</text></g>
+          <text class="sub" x="20" y="320">Inside or outside the network: every request is checked</text>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">Every service protects its data and its access by default, and can account for every action taken on it.</p>
+        <ul>
+          <li><b>QG1.1</b> Zero trust: every call authenticated and authorised</li>
+          <li><b>QG1.2</b> Encrypted in transit and at rest</li>
+          <li><b>QG1.4</b> Vulnerabilities patched within the deadline</li>
+          <li><b>QG1.6</b> No secrets in code, images or git</li>
+        </ul>
+        <p class="maps">ISO 25010: Security · AWS: Security · Google: Security, privacy and compliance</p>
+      </div>
+    </div>
+    <aside class="notes">
+      Network location earns no trust. Security is built into the platform and inherited, not added by each team.
+    </aside>
+  </section>
+
+  <!-- 8. QG2 Reliability -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG2</span><h2>Reliability</h2><span class="tag run">Runtime · SLOs</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="Traffic flows to three zones; when zone B is lost, traffic moves to zones A and C and the SLO is still met">
+          <line class="lane" x1="96" y1="170" x2="390" y2="75"/>
+          <line class="lane" x1="96" y1="170" x2="390" y2="170"/>
+          <line class="lane" x1="96" y1="170" x2="390" y2="265"/>
+          <circle cx="70" cy="170" r="27" fill="#12324f"/><text class="wht" x="70" y="175" text-anchor="middle">Users</text>
+          <rect class="box" x="390" y="40" width="190" height="70" rx="12"/>
+          <rect class="box q2-zoneb" x="390" y="135" width="190" height="70" rx="12"/>
+          <rect class="box" x="390" y="230" width="190" height="70" rx="12"/>
+          <text class="lbl" x="405" y="80">Zone A</text><text class="lbl" x="405" y="175">Zone B</text><text class="lbl" x="405" y="270">Zone C</text>
+          <g fill="#1f5fae"><circle cx="505" cy="75" r="8"/><circle cx="530" cy="75" r="8"/><circle cx="555" cy="75" r="8"/>
+            <circle cx="505" cy="265" r="8"/><circle cx="530" cy="265" r="8"/><circle cx="555" cy="265" r="8"/></g>
+          <circle class="q2-nodeb" cx="505" cy="170" r="8" fill="#1f5fae"/><circle class="q2-nodeb" cx="530" cy="170" r="8" fill="#1f5fae"/><circle class="q2-nodeb" cx="555" cy="170" r="8" fill="#1f5fae"/>
+          <circle class="dot q2-a" cx="96" cy="170" r="6"/><circle class="dot q2-a dl" cx="96" cy="170" r="6"/>
+          <circle class="dot q2-b" cx="96" cy="170" r="6"/><circle class="dot q2-b dl" cx="96" cy="170" r="6"/>
+          <circle class="dot q2-c" cx="96" cy="170" r="6"/><circle class="dot q2-c dl" cx="96" cy="170" r="6"/>
+          <circle class="dot q2-ax dq" cx="96" cy="170" r="6"/><circle class="dot q2-ax dr" cx="96" cy="170" r="6"/>
+          <circle class="dot q2-cx dq" cx="96" cy="170" r="6"/><circle class="dot q2-cx dr" cx="96" cy="170" r="6"/>
+          <g class="q2-lost"><rect x="425" y="186" width="120" height="24" rx="12" fill="#c62828"/><text class="wht" x="485" y="203" text-anchor="middle">zone lost</text></g>
+          <g class="q2-slo"><rect x="20" y="262" width="250" height="48" rx="12" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+            <text x="145" y="292" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#2e7d32">SLO met ✓ · no manual step</text></g>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">Every service publishes its SLO and keeps it through the failure of any single component or zone.</p>
+        <ul>
+          <li><b>QG2.1</b> SLOs per operation, from measured data</li>
+          <li><b>QG2.2</b> A failure stays inside its zone, cell or tenant</li>
+          <li><b>QG2.4</b> Restored from backup within RPO and RTO; mistaken deletes recoverable</li>
+          <li><b>QG2.7</b> Owners warned before certificates expire or quorum is lost</li>
+        </ul>
+        <p class="maps">ISO 25010: Reliability, Safety · AWS: Reliability · Google: Reliability</p>
+      </div>
+    </div>
+    <aside class="notes">
+      Watch zone B fail: traffic moves to A and C automatically and the SLO is still met.
+      QG2 now also holds the former Safety scenarios: blast radius, fail-safe, reversible deletes, early warning.
+    </aside>
+  </section>
+
+  <!-- 9. QG3 Performance -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG3</span><h2>Performance Efficiency</h2><span class="tag run">Runtime · SLOs</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="One tenant's load grows until it hits its quota; the other tenants' latency stays within target">
+          <line x1="40" y1="290" x2="300" y2="290" stroke="#9aa6b5" stroke-width="2"/>
+          <line x1="40" y1="120" x2="300" y2="120" stroke="#e5712f" stroke-width="2" stroke-dasharray="6 5"/>
+          <text class="sub" x="40" y="110">quota</text>
+          <rect class="bar q3-a" x="60" y="120" width="56" height="170" rx="6" fill="#1f5fae" style="transform:scaleY(.5)"/>
+          <rect class="bar q3-b" x="142" y="120" width="56" height="170" rx="6" fill="#1f5fae" style="transform:scaleY(.4)"/>
+          <rect class="bar q3-c" x="224" y="120" width="56" height="170" rx="6" fill="#1f5fae" style="transform:scaleY(.5)"/>
+          <text class="sub" x="88" y="312" text-anchor="middle">Tenant A</text><text class="sub" x="170" y="312" text-anchor="middle">Tenant B</text><text class="sub" x="252" y="312" text-anchor="middle">Tenant C</text>
+          <g class="q3-thr"><rect x="112" y="64" width="118" height="26" rx="13" fill="#e5712f"/><text class="wht" x="171" y="82" text-anchor="middle">throttled</text></g>
+          <path d="M355 250 A100 100 0 0 1 405 163.4" fill="none" stroke="#2e7d32" stroke-width="18"/>
+          <path d="M405 163.4 A100 100 0 0 1 505 163.4" fill="none" stroke="#f2a33a" stroke-width="18"/>
+          <path d="M505 163.4 A100 100 0 0 1 555 250" fill="none" stroke="#c62828" stroke-width="18"/>
+          <line class="needle" x1="455" y1="250" x2="455" y2="165" stroke="#12324f" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="455" cy="250" r="9" fill="#12324f"/>
+          <text class="lbl" x="455" y="290" text-anchor="middle">Tenants A and C: p99</text>
+          <text x="455" y="314" text-anchor="middle" style="font-size:14px;font-weight:700;fill:#2e7d32">within target ✓</text>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">Every service delivers predictable, measured performance and is sized to demand. Capacity limits are known before they are reached.</p>
+        <ul>
+          <li><b>QG3.1</b> Data-plane latency within published targets</li>
+          <li><b>QG3.2</b> Each operation (R1–R4) completes in a predictable time</li>
+          <li><b>QG3.3</b> Owners alerted before a capacity limit is reached</li>
+          <li><b>QG3.4</b> One heavy tenant does not slow the others</li>
+        </ul>
+        <p class="maps">ISO 25010: Performance efficiency · AWS: Performance efficiency · Google: Performance optimization</p>
+      </div>
+    </div>
+    <aside class="notes">
+      Tenant B grows until it hits its quota and is throttled; the gauge shows the other tenants stay within target.
+    </aside>
+  </section>
+
+  <!-- 10. QG4 Operability -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG4</span><h2>Operability</h2><span class="tag built">Built-in · scorecard</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="A change flows from git through the pipeline to the cluster; a manual change causes drift, which is reconciled from git">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5f6b7a"/></marker></defs>
+          <path class="q4-sync" d="M95 110 C 95 20, 505 20, 505 110" fill="none" stroke="#2e7d32" stroke-width="3" marker-end="url(#ah)"/>
+          <text class="q4-synclbl" x="300" y="40" text-anchor="middle" style="font-size:14px;font-weight:700;fill:#2e7d32">reconcile from git</text>
+          <rect class="box" x="30" y="110" width="130" height="80" rx="12"/><text class="lbl" x="95" y="146" text-anchor="middle">Git</text><text class="sub" x="95" y="166" text-anchor="middle">desired state</text>
+          <rect class="box" x="235" y="110" width="130" height="80" rx="12"/><text class="lbl" x="300" y="155" text-anchor="middle">Pipeline</text>
+          <rect class="q4-cluster" x="440" y="110" width="130" height="80" rx="12" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/><text class="lbl" x="505" y="155" text-anchor="middle">Cluster</text>
+          <line x1="162" y1="150" x2="231" y2="150" stroke="#5f6b7a" stroke-width="2" marker-end="url(#ah)"/>
+          <line x1="367" y1="150" x2="436" y2="150" stroke="#5f6b7a" stroke-width="2" marker-end="url(#ah)"/>
+          <circle class="q4-commit" cx="95" cy="205" r="9" fill="#1f5fae"/>
+          <text class="q4-ok" x="505" y="218" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#2e7d32">in sync ✓</text>
+          <text class="q4-drift" x="505" y="218" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#e5712f">drift detected</text>
+          <g class="q4-wrench"><rect x="448" y="236" width="114" height="30" rx="15" fill="#e5712f"/><text class="wht" x="505" y="256" text-anchor="middle">manual change</text></g>
+          <text class="sub" x="30" y="312">Every change goes through git; no production change depends on manual steps</text>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">Every service is operated through automation and can be observed, diagnosed and changed safely and frequently.</p>
+        <ul>
+          <li><b>QG4.1</b> Everything as code: drift detected and alerted</li>
+          <li><b>QG4.2</b> SLO dashboards and alerts for every service</li>
+          <li><b>QG4.3</b> On-call finds the failing component using runbooks</li>
+          <li><b>QG4.4</b> Blameless post-incident reviews, actions tracked</li>
+        </ul>
+        <p class="maps">ISO 25010: Maintainability, Operability · AWS and Google: Operational excellence</p>
+      </div>
+    </div>
+    <aside class="notes">
+      A commit flows to the cluster. Someone changes the cluster by hand: drift is detected and reconciled back from git.
+    </aside>
+  </section>
+
+  <!-- 11. QG5 Flexibility -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG5</span><h2>Flexibility</h2><span class="tag built">Built-in · scorecard</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="Consumers talk to a capability contract; the provider behind it is replaced without the consumers noticing">
+          <rect class="box" x="45" y="22" width="140" height="50" rx="10"/><text class="lbl" x="115" y="53" text-anchor="middle">Consumer</text>
+          <rect class="box" x="230" y="22" width="140" height="50" rx="10"/><text class="lbl" x="300" y="53" text-anchor="middle">Consumer</text>
+          <rect class="box" x="415" y="22" width="140" height="50" rx="10"/><text class="lbl" x="485" y="53" text-anchor="middle">Consumer</text>
+          <circle class="dot q5-flow" cx="115" cy="80" r="6"/><circle class="dot q5-flow dl" cx="115" cy="80" r="6"/>
+          <circle class="dot q5-flow" cx="300" cy="80" r="6"/><circle class="dot q5-flow dl" cx="300" cy="80" r="6"/>
+          <circle class="dot q5-flow" cx="485" cy="80" r="6"/><circle class="dot q5-flow dl" cx="485" cy="80" r="6"/>
+          <rect x="30" y="140" width="540" height="44" rx="10" fill="#12324f"/>
+          <text class="wht" x="300" y="167" text-anchor="middle" style="font-size:15px">Capability contract (API, CRD, S3, CSI…)</text>
+          <line x1="300" y1="184" x2="300" y2="226" stroke="#5f6b7a" stroke-width="2"/>
+          <g class="q5-a"><rect x="190" y="226" width="220" height="64" rx="12" fill="#e8f0fb" stroke="#1f5fae" stroke-width="2"/>
+            <text class="lbl" x="300" y="254" text-anchor="middle">Provider A</text><text class="sub" x="300" y="274" text-anchor="middle">hypervisor X</text></g>
+          <g class="q5-b"><rect x="190" y="226" width="220" height="64" rx="12" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+            <text class="lbl" x="300" y="254" text-anchor="middle">Provider B</text><text class="sub" x="300" y="274" text-anchor="middle">bare metal</text></g>
+          <text x="300" y="322" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#2e7d32">Consumers unchanged ✓</text>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">Every service depends only on the capability it consumes, never on the implementation behind it.</p>
+        <ul>
+          <li><b>QG5.1</b> Replace or exit a provider, seamless to consumers; every provider has an exit plan</li>
+          <li><b>QG5.2</b> Transferability: not bound to one network or site; deployed anywhere from the same pipeline</li>
+        </ul>
+        <p class="maps">ISO 25010: Flexibility · Google: Design for change, Decouple your architecture</p>
+      </div>
+    </div>
+    <aside class="notes">
+      Traffic keeps flowing while the provider behind the contract is swapped. Consumers are not aware of backend changes.
+    </aside>
+  </section>
+
+  <!-- 12. QG6 Consumability -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG6</span><h2>Consumability</h2><span class="tag built">Built-in · scorecard</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="A consumer finds a database in the catalogue, provisions it and gets a ready instance without a ticket">
+          <rect x="20" y="20" width="290" height="300" rx="14" fill="#fff" stroke="#c7d1de" stroke-width="2"/>
+          <text class="lbl" x="40" y="52">Service catalogue</text>
+          <rect class="box" x="38" y="70" width="254" height="56" rx="10"/><text class="lbl" x="52" y="103">Database</text>
+          <rect x="196" y="84" width="84" height="28" rx="14" fill="#1f5fae"/><text class="wht" x="238" y="103" text-anchor="middle">Provision</text>
+          <rect class="box" x="38" y="140" width="254" height="56" rx="10"/><text class="lbl" x="52" y="173">Object storage</text>
+          <rect class="box" x="38" y="210" width="254" height="56" rx="10"/><text class="lbl" x="52" y="243">Virtual machine</text>
+          <text class="sub" x="40" y="298">docs · API reference · examples · SLO</text>
+          <circle class="q6-click" cx="238" cy="98" r="18" fill="#1f5fae"/>
+          <g class="q6-inst"><rect x="340" y="60" width="240" height="120" rx="14" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+            <text class="lbl" x="360" y="92">postgres-01</text>
+            <rect x="360" y="110" width="200" height="12" rx="6" fill="#fff"/>
+            <rect class="q6-prog" x="360" y="110" width="200" height="12" rx="6" fill="#2e7d32"/>
+            <text class="q6-ready" x="360" y="156" style="font-size:16px;font-weight:700;fill:#2e7d32">Ready in 4 min · no ticket ✓</text></g>
+          <g class="q6-v2"><rect x="340" y="210" width="240" height="90" rx="14" fill="#fff" stroke="#c7d1de" stroke-width="2"/>
+            <text class="lbl" x="360" y="240">API v2 released</text>
+            <text x="360" y="270" style="font-size:14px;font-weight:700;fill:#2e7d32">v1 consumers keep working ✓</text></g>
+          <path class="q6-cursor" d="M414 312 l0 26 l7 -7 l5 12 l5 -2 l-5 -12 l10 0 z" fill="#12324f" stroke="#fff" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">A consumer can find, understand and use any service without help from the team that runs it.</p>
+        <ul>
+          <li><b>QG6.1</b> Self-service: no tickets for routine operations</li>
+          <li><b>QG6.2</b> Listed in the catalogue with docs, API reference, examples and SLO</li>
+          <li><b>QG6.5</b> Invalid requests rejected with a message that says how to fix them</li>
+          <li><b>QG6.6</b> Stable, standard interface: versioned API, no breaking changes</li>
+        </ul>
+        <p class="maps">ISO 25010: Interaction capability, Functional suitability, Compatibility</p>
+      </div>
+    </div>
+    <aside class="notes">
+      Find it, click provision, use it: no ticket and no meeting. New API versions don't break existing consumers.
+    </aside>
+  </section>
+
+  <!-- 13. QG7 Cost Efficiency -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG7</span><h2>Cost Efficiency</h2><span class="tag built">Built-in · scorecard</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="Capacity reserved but unused by team A is used by team B, and given back when team A needs it">
+          <text class="lbl" x="30" y="60">Capacity</text>
+          <g fill="#1f5fae"><rect x="30" y="120" width="50" height="64" rx="8"/><rect x="86" y="120" width="50" height="64" rx="8"/><rect x="142" y="120" width="50" height="64" rx="8"/></g>
+          <g fill="#fff" stroke="#1f5fae" stroke-width="2" stroke-dasharray="5 4"><rect x="198" y="120" width="50" height="64" rx="8"/><rect x="254" y="120" width="50" height="64" rx="8"/><rect x="310" y="120" width="50" height="64" rx="8"/></g>
+          <g fill="#fff" stroke="#c7d1de" stroke-width="2"><rect x="366" y="120" width="50" height="64" rx="8"/><rect x="422" y="120" width="50" height="64" rx="8"/><rect x="478" y="120" width="50" height="64" rx="8"/><rect x="534" y="120" width="50" height="64" rx="8"/></g>
+          <rect class="q7-b" x="198" y="120" width="50" height="64" rx="8" fill="#e5712f" stroke="#e5712f" stroke-width="2"/>
+          <rect class="q7-b k5" x="254" y="120" width="50" height="64" rx="8" fill="#e5712f" stroke="#e5712f" stroke-width="2"/>
+          <rect class="q7-b6" x="310" y="120" width="50" height="64" rx="8" fill="#e5712f" stroke="#e5712f" stroke-width="2"/>
+          <g class="q7-a" fill="#1f5fae" stroke="#1f5fae" stroke-width="2"><rect x="198" y="120" width="50" height="64" rx="8"/><rect x="254" y="120" width="50" height="64" rx="8"/></g>
+          <path d="M30 196 h330" stroke="#1f5fae" stroke-width="3"/><text class="sub" x="30" y="216">Team A owns these 6 · tagged: owner, cost centre</text>
+          <text class="q7-lbl1" x="198" y="102" style="font-size:14px;font-weight:700;fill:#e5712f">Team B uses unclaimed capacity</text>
+          <text class="q7-lbl2" x="150" y="102" style="font-size:14px;font-weight:700;fill:#1f5fae">Team A needs it back: reclaimed</text>
+          <g transform="translate(30,256)">
+            <rect width="16" height="16" rx="4" fill="#1f5fae"/><text class="sub" x="22" y="13">Team A (owner)</text>
+            <rect x="140" width="16" height="16" rx="4" fill="#e5712f"/><text class="sub" x="162" y="13">Team B (may be reclaimed)</text>
+            <rect x="350" width="16" height="16" rx="4" fill="#fff" stroke="#1f5fae" stroke-dasharray="4 3"/><text class="sub" x="372" y="13">reserved, unused</text>
+          </g>
+          <text class="sub" x="30" y="310">Monthly: usage and cost per service and department, with right-sizing advice</text>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">Every unit of capacity is attributed to an owner, justified by business value and right-sized. Cost is visible to those who create it.</p>
+        <ul>
+          <li><b>QG7.1</b> Every resource tagged with owner, cost centre and environment</li>
+          <li><b>QG7.2</b> Opportunism: unclaimed capacity can be used by others until the owner takes it back</li>
+          <li><b>QG7.3</b> Cost visibility: monthly report with right-sizing recommendations</li>
+        </ul>
+        <p class="maps">ISO 25010: Resource utilization · AWS and Google: Cost optimization</p>
+      </div>
+    </div>
+    <aside class="notes">
+      Reserved but unused capacity is used by another team, who knows it may be taken back at any moment.
+    </aside>
+  </section>
+
+  <!-- 14. QG8 Sustainability -->
+  <section>
+    <div class="qg-head"><span class="qg-id">QG8</span><h2>Sustainability</h2><span class="tag review">Under review</span></div>
+    <div class="qg-body">
+      <div class="scene">
+        <svg viewBox="0 0 600 340" role="img" aria-label="Workloads are consolidated onto fewer hosts and the freed hosts are powered down">
+          <rect class="box" x="20" y="70" width="125" height="190" rx="12"/><rect class="box" x="160" y="70" width="125" height="190" rx="12"/>
+          <rect class="box q8-off" x="300" y="70" width="125" height="190" rx="12"/><rect class="box q8-off" x="440" y="70" width="125" height="190" rx="12"/>
+          <text class="lbl" x="82" y="58" text-anchor="middle">Host 1</text><text class="lbl" x="222" y="58" text-anchor="middle">Host 2</text>
+          <text class="lbl" x="362" y="58" text-anchor="middle">Host 3</text><text class="lbl" x="502" y="58" text-anchor="middle">Host 4</text>
+          <g fill="#1f5fae"><rect x="40" y="90" width="85" height="34" rx="6"/><rect x="180" y="90" width="85" height="34" rx="6"/></g>
+          <rect class="q8-m1" x="320" y="90" width="85" height="34" rx="6" fill="#1f5fae"/>
+          <rect class="q8-m2" x="460" y="90" width="85" height="34" rx="6" fill="#1f5fae"/>
+          <rect class="q8-m3" x="320" y="134" width="85" height="34" rx="6" fill="#1f5fae"/>
+          <g class="q8-offlbl"><text x="362" y="170" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#5f6b7a">powered down</text>
+            <text x="502" y="170" text-anchor="middle" style="font-size:15px;font-weight:700;fill:#5f6b7a">powered down</text></g>
+          <text class="sub" x="20" y="300">Same workloads, fewer hosts: utilisation up, energy down</text>
+        </svg>
+      </div>
+      <div class="qg-text">
+        <p class="statement">Our energy and hardware footprint goes down as utilisation goes up.</p>
+        <ul>
+          <li><b>QG8.1</b> Utilisation targets met and reported</li>
+          <li><b>QG8.3</b> Hardware lifecycle: refresh decided on energy as well as cost</li>
+          <li><b>QG8.5</b> All data under a lifecycle policy</li>
+        </ul>
+        <p class="maps" style="color:#e5712f">Candidate for removal. Open question: does the server life cycle move to QG2 Reliability?</p>
+      </div>
+    </div>
+    <aside class="notes">
+      QG8 is still being discussed: the proposal is to remove it and move the server life cycle into QG2.
+    </aside>
+  </section>
+
+  <!-- 15. Principles -->
+  <section>
+    <h2>Cross-cutting principles</h2>
+    <ol class="plist">
+      <li class="fragment"><b>Design for change.</b> Small, frequent changes with fast feedback.</li>
+      <li class="fragment"><b>Document your architecture.</b> arc42 and ADRs for every service.</li>
+      <li class="fragment"><b>Simplify.</b> Start minimal; use platform services before building your own.</li>
+      <li class="fragment"><b>Decouple.</b> Upgrade, secure, scale and monitor components independently.</li>
+      <li class="fragment"><b>Prefer stateless.</b> Keep state in managed data services.</li>
+      <li class="fragment"><b>Verify every change against every quality.</b> AI-written and human-written code pass the same gates.</li>
+      <li class="fragment draft"><b>Event integration</b> <i>(draft)</i>. Documented, versioned events: AsyncAPI, CloudEvents.</li>
+    </ol>
+    <aside class="notes">
+      1–5 follow the Google Cloud Architecture Framework core principles; 6 follows the ISO 25010 guidance for the AI era.
+    </aside>
+  </section>
+
+  <!-- 16. Scorecard -->
+  <section>
+    <h2>The scorecard: from principles to practice</h2>
+    <div class="stairs-wrap">
+      <div class="scene" style="flex:0 0 600px">
+        <svg viewBox="0 0 600 330" role="img" aria-label="A service climbs from Bronze to Silver to Gold as it passes the checks of each level">
+          <rect x="140" y="230" width="150" height="80" rx="8" fill="#86b6ef"/>
+          <rect x="290" y="170" width="150" height="140" rx="8" fill="#3987e5"/>
+          <rect x="440" y="110" width="150" height="200" rx="8" fill="#12324f"/>
+          <text class="lbl" x="215" y="275" text-anchor="middle">Bronze</text>
+          <text class="wht" x="365" y="215" text-anchor="middle" style="font-size:15px">Silver</text>
+          <text class="wht" x="515" y="155" text-anchor="middle" style="font-size:15px">Gold</text>
+          <text class="sub" x="215" y="297" text-anchor="middle">7 checks</text>
+          <text class="wht" x="365" y="237" text-anchor="middle" style="font-weight:400;font-size:12px">+17 checks</text>
+          <text class="wht" x="515" y="177" text-anchor="middle" style="font-weight:400;font-size:12px">+8 checks</text>
+          <line x1="10" y1="310" x2="590" y2="310" stroke="#9aa6b5" stroke-width="2"/>
+          <g class="sc-dot"><circle cx="65" cy="290" r="18" fill="#e5712f"/><text class="wht" x="65" y="295" text-anchor="middle" style="font-size:11px">svc</text></g>
+          <text class="sc-l1" x="20" y="40" style="font-size:15px;font-weight:700;fill:#2e7d32">✓ Bronze: ready for production</text>
+          <text class="sc-l2" x="20" y="66" style="font-size:15px;font-weight:700;fill:#2e7d32">✓ Silver: operable and secure</text>
+          <text class="sc-l3" x="20" y="92" style="font-size:15px;font-weight:700;fill:#2e7d32">✓ Gold: resilient and portable</text>
+        </svg>
+      </div>
+      <ul class="rules">
+        <li>One <b>check</b> per quality goal scenario: 32 today</li>
+        <li>A level is reached only when <b>every check at that level and below</b> passes</li>
+        <li>A service's level = its <b>weakest production deployment</b></li>
+        <li>Failed check risk: Bronze <b>High</b>, Silver <b>Medium</b>, Gold <b>Low</b></li>
+        <li>SLO results are shown next to the level, not inside it</li>
+      </ul>
+    </div>
+    <aside class="notes">
+      Checks come from automated signals (policy compliance, CI, metrics) or a half-day review based on ATAM.
+    </aside>
+  </section>
+
+  <!-- 17. Dashboard -->
+  <section>
+    <h2>What teams and managers see</h2>
+    <img src="../docs/scorecard/dashboards/fleet-overview.png" alt="Fleet overview dashboard: services ranked by level, checks passing by quality goal and site" style="width:92%;border-radius:10px;box-shadow:0 6px 24px rgba(18,50,79,.18)">
+    <p class="small">Example dashboard, illustrative data · also: deployments ranking, service detail</p>
+    <aside class="notes">
+      Levels per deployment and per service, ranked, with the checks that block the next level. Built from one metric in Prometheus.
+    </aside>
+  </section>
+
+  <!-- 18. How it fits -->
+  <section>
+    <h2>How it fits together</h2>
+    <div class="cards">
+      <div class="card navy"><h3>What</h3><p><b>Requirements</b> R1–R5</p><p><b>Quality goals</b> QG1–QG8, as scenarios</p><p><b>Principles</b></p></div>
+      <div class="card" style="border-top-color:var(--good)"><h3 style="color:var(--good)">Runtime check</h3><p><b>SLA framework</b>: SLOs, error budgets, SLA</p><p>QG2, QG3</p></div>
+      <div class="card"><h3>Built-in check</h3><p><b>Scorecard</b>: checks, levels, ranking, dashboards</p><p>All quality goals</p></div>
+      <div class="card navy"><h3>Decide</h3><p><b>ADRs</b> for decisions</p><p><b>Exceptions</b> with an expiry date</p></div>
+    </div>
+    <aside class="notes">
+      What we want, how we check it at runtime and at build time, and how we record the decisions in between.
+    </aside>
+  </section>
+
+  <!-- 19. Next -->
+  <section>
+    <h2>Next steps</h2>
+    <ul class="rules" style="font-size:0.7em;width:80%;margin:0 auto">
+      <li class="fragment">Decide QG8 Sustainability and the server life cycle</li>
+      <li class="fragment">Calibrate the <code>N</code> targets in the quality goal measures</li>
+      <li class="fragment">Pilot the scorecard on the HCP + KubeVirt platform</li>
+      <li class="fragment">Automate: check catalogue as data, scoring script, Grafana dashboards and alerts</li>
+      <li class="fragment">Then a Claude skill for onboarding, reviews and explanations</li>
+    </ul>
+  </section>
+
+  <!-- 20. More info -->
+  <section>
+    <h2>More info</h2>
+    <div class="cards">
+      <div class="card"><h3>Principles</h3>
+        <p><a href="https://github.com/Idan-Maimon/cloud-architecture-principles">Repository</a></p>
+        <p><a href="https://github.com/Idan-Maimon/cloud-architecture-principles/tree/main/docs/quality-goals">Quality goals</a></p>
+        <p><a href="https://github.com/Idan-Maimon/cloud-architecture-principles/tree/main/docs/decisions">Decisions (ADRs)</a></p></div>
+      <div class="card"><h3>Scorecard</h3>
+        <p><a href="https://github.com/Idan-Maimon/cloud-architecture-principles/tree/main/docs/scorecard">Guide and check catalogue</a></p>
+        <p><a href="https://github.com/Idan-Maimon/cloud-architecture-principles/tree/main/docs/scorecard/examples/hcp-kubevirt-platform">HCP + KubeVirt example</a></p></div>
+      <div class="card"><h3>SLA framework</h3>
+        <p><a href="https://github.com/Idan-Maimon/sla-framework">Repository</a></p>
+        <p><a href="https://idan-maimon.github.io/sla-framework/presentation/">Presentation</a></p></div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script src="reveal.js/reveal.js"></script>
+<script src="reveal.js/plugin/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    width: 1280,
+    height: 720,
+    plugins: [ RevealNotes ]
+  });
+</script>
+</body>
+</html>
