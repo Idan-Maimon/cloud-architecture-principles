@@ -32,7 +32,7 @@ flowchart LR
 | Level | Meaning | Checks | A failed check is |
 |---|---|---|---|
 | **Bronze** | Ready for production: the basics every service needs | 7 | **High risk** |
-| **Silver** | Operable and secure: runs safely day to day | 17 | **Medium risk** |
+| **Silver** | Operable and secure: runs safely day to day | 16 | **Medium risk** |
 | **Gold** | Resilient and portable: survives failures, moves between sites | 8 | **Low risk** |
 
 Which check sits at which level, and where its result comes from: **[check catalogue](check-catalogue.md)**.

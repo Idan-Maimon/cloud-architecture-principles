@@ -6,7 +6,7 @@ and its level decides how serious a failure is. How levels and ranking work: [th
 | Level | Checks | A failed check is |
 |---|---|---|
 | **Bronze**: ready for production | 7 | **High risk** |
-| **Silver**: operable and secure | 17 | **Medium risk** |
+| **Silver**: operable and secure | 16 | **Medium risk** |
 | **Gold**: resilient and portable | 8 | **Low risk** |
 
 **Scope:** *Deployment* checks are evaluated on every deployment (cluster or site) separately.
@@ -25,10 +25,9 @@ Targets marked `N` come from the scenario's measure and are still to be calibrat
 |---|---|---|---|---|---|
 | QG1.1 | Zero trust | Every endpoint requires authentication through the platform identity provider; nothing is trusted by network location | Deployment | Policy compliance | Bronze |
 | QG1.2 | Encryption | Storage encryption and TLS 1.2+ are enabled | Deployment | Policy compliance | Bronze |
-| QG1.3 | Accountability | Audit logs are forwarded to the central log store with the declared retention | Deployment | Policy compliance | Silver |
-| QG1.4 | Resistance | No critical or high vulnerability is open past its patch deadline | Deployment | Vulnerability scanner | Silver |
-| QG1.5 | Least privilege | No standing admin access outside break-glass accounts, and access was reviewed on schedule | Deployment | Policy compliance + access review record | Silver |
-| QG1.6 | Secret handling | Secret scanning finds no secrets in the service's repositories or images | Service | CI pipeline | Bronze |
+| QG1.3 | Audit | Audit logs are forwarded to the central log store with the declared retention | Deployment | Policy compliance | Silver |
+| QG1.4 | Least privilege | No standing admin access outside break-glass accounts, and access was reviewed on schedule | Deployment | Policy compliance + access review record | Silver |
+| QG1.5 | Secret handling | Secret scanning finds no secrets in the service's repositories or images | Service | CI pipeline | Bronze |
 
 ## QG2 Reliability
 

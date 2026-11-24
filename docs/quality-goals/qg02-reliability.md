@@ -17,7 +17,7 @@ Every service publishes its service level objective (SLO) and keeps it through t
 
 | ID | Scenario | Stimulus | Expected response | Measure |
 |---|---|---|---|---|
-| QG2.1 | Availability | Normal operation over a rolling 4-week window | Each operation (R1–R4) and the running instance meet their SLOs | SLOs set per operation from measured data, following the [SLA framework](https://github.com/Idan-Maimon/sla-framework); error budget policy agreed (see [Requirements and qualities](../principles/requirements-and-qualities.md)) |
+| QG2.1 | Availability | A consumer uses an instance or triggers an operation (R1–R5) | The instance is accessible and the operation is served successfully | ≥ SLO % succeed per operation over a rolling 4-week window; SLOs set per operation from measured data, following the [SLA framework](https://github.com/Idan-Maimon/sla-framework); error budget policy agreed (see [Requirements and qualities](../principles/requirements-and-qualities.md)) |
 | QG2.2 | Failure containment | A zone is lost, or a failure or bad change hits one tenant, cell or zone | Impact stays inside that failure domain; Tier 1 and Tier 2 services keep serving | SLO not breached; no manual intervention; 0 incidents spanning more than one failure domain |
 | QG2.3 | Component failure | A single instance, node, disk or dependency fails | Traffic moves to healthy instances automatically, or the service degrades in a controlled way | Recovery ≤ N minutes; no data loss or corruption |
 | QG2.4 | Recoverability | Data is lost, corrupted or deleted by mistake | The service is restored from backup, or recovered within the protection window | Within the declared RPO and RTO; deleted instances and data recoverable for ≥ N days |
