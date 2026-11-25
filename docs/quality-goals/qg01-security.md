@@ -38,9 +38,8 @@ Every service protects its data and its access by default, and can account for e
 - Is all data encrypted in transit and at rest?
 - Are all actions audit-logged to the central, immutable log?
 - Are there any secrets in code, images or repositories?
-- Does the pipeline block release on critical vulnerabilities?
 - Are tenants isolated from each other?
 
 ## Example
 
-A database service authenticates every client through OIDC-issued workload identities, encrypts storage with keys from the platform KMS, writes every DDL and access event to the central audit log, and is rebuilt from a patched image within N days of a critical CVE.
+A database service authenticates every client through OIDC-issued workload identities, encrypts storage with keys from the platform KMS, and writes every DDL and access event to the central audit log.
